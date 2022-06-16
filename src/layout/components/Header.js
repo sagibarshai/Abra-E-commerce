@@ -5,7 +5,7 @@ import {
   StyledLink,
   StyledLogo,
   StyledUserLogo,
-} from './style/header-style';
+} from './style/StyledHeader';
 import { ReactComponent as Logo } from '../../svg/logo.svg';
 import userIcon from '../../svg/userIcon.png';
 export default () => {
@@ -33,36 +33,34 @@ export default () => {
   ];
 
   return (
-    <BrowserRouter>
-      <StyledHeader>
-        <Link to="/home">
-          <StyledLogo>
-            <Logo />
-          </StyledLogo>
-        </Link>
-        <StyledNav>
-          {NAV_LINKS.map((link, index) => {
-            return (
-              <StyledLink key={index}>
-                <NavLink
-                  to={link.to}
-                  style={({ isActive }) => {
-                    return {
-                      borderBottom: isActive ? '1px solid white' : 'none',
-                      textDecoration: 'none',
-                      paddingBottom: '18px',
-                      color: 'white',
-                    };
-                  }}
-                >
-                  {link.text}
-                </NavLink>
-              </StyledLink>
-            );
-          })}
-        </StyledNav>
-        <StyledUserLogo src={userIcon} />
-      </StyledHeader>
-    </BrowserRouter>
+    <StyledHeader>
+      <Link to="/home">
+        <StyledLogo>
+          <Logo />
+        </StyledLogo>
+      </Link>
+      <StyledNav>
+        {NAV_LINKS.map((link, index) => {
+          return (
+            <StyledLink key={index}>
+              <NavLink
+                to={link.to}
+                style={({ isActive }) => {
+                  return {
+                    borderBottom: isActive ? '1px solid white' : 'none',
+                    textDecoration: 'none',
+                    paddingBottom: '18px',
+                    color: 'white',
+                  };
+                }}
+              >
+                {link.text}
+              </NavLink>
+            </StyledLink>
+          );
+        })}
+      </StyledNav>
+      <StyledUserLogo src={userIcon} />
+    </StyledHeader>
   );
 };
