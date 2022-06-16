@@ -1,4 +1,4 @@
-import { BrowserRouter, NavLink } from 'react-router-dom';
+import { BrowserRouter, NavLink, Link } from 'react-router-dom';
 import {
   StyledHeader,
   StyledNav,
@@ -9,92 +9,57 @@ import {
 import { ReactComponent as Logo } from '../../svg/logo.svg';
 import userIcon from '../../svg/userIcon.png';
 export default () => {
+  const NAV_LINKS = [
+    {
+      text: 'Best Sellers',
+      to: '/best-sellers',
+    },
+    {
+      text: 'Clothing',
+      to: '/clothing',
+    },
+    {
+      text: 'Home',
+      to: '/home',
+    },
+    {
+      text: 'Office',
+      to: '/office',
+    },
+    {
+      text: 'Sports',
+      to: '/sports',
+    },
+  ];
+
   return (
     <BrowserRouter>
       <StyledHeader>
-        <StyledLogo>
-          <Logo />
-        </StyledLogo>
+        <Link to="/home">
+          <StyledLogo>
+            <Logo />
+          </StyledLogo>
+        </Link>
         <StyledNav>
-          <StyledLink>
-            <NavLink
-              to="/hello1"
-              style={({ isActive }) => {
-                return {
-                  textDecoration: isActive ? 'underline' : 'none',
-                  color: 'white',
-                };
-              }}
-            >
-              hello1
-            </NavLink>
-          </StyledLink>
-          <StyledLink>
-            <NavLink
-              to="/hello2"
-              style={({ isActive }) => {
-                return {
-                  textDecoration: isActive ? 'underline' : 'none',
-                  color: 'white',
-                };
-              }}
-            >
-              hello2
-            </NavLink>
-          </StyledLink>
-          <StyledLink>
-            <NavLink
-              to="/hello3"
-              style={({ isActive }) => {
-                return {
-                  textDecoration: isActive ? 'underline' : 'none',
-                  color: 'white',
-                };
-              }}
-            >
-              hello3
-            </NavLink>
-          </StyledLink>
-          <StyledLink>
-            <NavLink
-              to="/hello4"
-              style={({ isActive }) => {
-                return {
-                  borderBottom: isActive ? '2px solid white' : 'none',
-                  textDecoration: 'none',
-                  paddingBottom: '10px',
-                  color: 'white',
-                  lineHeight: '20px',
-                };
-              }}
-            >
-              hello4
-            </NavLink>
-          </StyledLink>
-          <StyledLink>
-            <NavLink
-              to="/hello5"
-              style={({ isActive }) => {
-                return {
-                  textDecoration: isActive ? 'underline' : 'none',
-                  color: 'white',
-                };
-              }}
-            >
-              hello5
-            </NavLink>
-          </StyledLink>
-          <NavLink
-            to="/hello6"
-            style={({ isActive }) => {
-              return {
-                textDecoration: isActive ? 'underline' : 'none',
-                color: 'white',
-              };
-            }}
-          >
-            hello6
-          </NavLink>
+          {NAV_LINKS.map((link, index) => {
+            return (
+              <StyledLink key={index}>
+                <NavLink
+                  to={link.to}
+                  style={({ isActive }) => {
+                    return {
+                      borderBottom: isActive ? '1px solid white' : 'none',
+                      textDecoration: 'none',
+                      paddingBottom: '18px',
+                      color: 'white',
+                    };
+                  }}
+                >
+                  {link.text}
+                </NavLink>
+              </StyledLink>
+            );
+          })}
         </StyledNav>
         <StyledUserLogo src={userIcon} />
       </StyledHeader>
