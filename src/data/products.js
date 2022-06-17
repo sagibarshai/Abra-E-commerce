@@ -6,7 +6,7 @@ export const Products = createContext({
       name: 'Black T-shirt',
       price: 89,
       imgSrc: '/images/tshirt.jpg',
-      types: ['Best_Sellers', 'Clothing '],
+      types: ['Best_Sellers', 'Clothing'],
     },
     {
       name: 'White Mouse Pad',
@@ -24,7 +24,7 @@ export const Products = createContext({
       name: 'White Hat',
       price: 64,
       imgSrc: '/images/w-hat.png',
-      types: ['Sport', 'Best_Sellers'],
+      types: ['Sport', 'Best_Sellers', 'Clothing'],
     },
     {
       name: 'Black Bottle',

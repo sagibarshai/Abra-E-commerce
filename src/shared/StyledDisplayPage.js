@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 export const StyledMainContainer = styled.main`
-  width: 1604px;
   margin-left: 24px;
   font-family: 'Assistant', sans-serif;
   margin-bottom: 100px;
-  min-height: 388px;
+  height: 1600px;
 `;
 export const StyledTitle = styled.h1`
   margin: 64px 117px 40px 24px;
@@ -21,6 +20,9 @@ export const StyledFlexContainer = styled.div`
   row-gap: 48px;
   column-gap: 24px;
   height: auto;
+  width: 1556px;
+
+  /* background-color: blue; */
 `;
 export const StyledItem = styled.div`
   display: flex;
