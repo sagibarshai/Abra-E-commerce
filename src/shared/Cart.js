@@ -15,7 +15,21 @@ import {
   StyledFlexTextContainer,
 } from './StyledCart';
 import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
-export default () => {
+import { useState, useEffect } from 'react';
+export default (props) => {
+  const [itemsInCart, setItemsInCart] = useState([]);
+  useEffect(() => {
+    let setProducts = new Set(props.products);
+    let updatedArr = [];
+    for (let product of setProducts) {
+      let item = localStorage.getItem(product.name);
+      if (item) {
+        updatedArr.push(product);
+      }
+    }
+    setItemsInCart((prevItems) => updatedArr);
+    console.log(itemsInCart);
+  }, [props]);
   return (
     <StyledCartConainer>
       <StyledTitle>My Cart</StyledTitle>
@@ -28,7 +42,7 @@ export default () => {
         Items are reserved for 60 minutes
       </StyledParagraph>
       <StyledItemsContainer>
-        <StyledFlexItem>
+        {/* <StyledFlexItem>
           <StyledImgContainer>
             <StyledImg src="/images/tshirt.jpg" />
           </StyledImgContainer>
@@ -81,7 +95,7 @@ export default () => {
               </StyledTextFlexContainer>
             </StyledTextFlexContainer>
           </StyledTextContainer>
-        </StyledFlexItem>
+        </StyledFlexItem> */}
       </StyledItemsContainer>
       <StyledFlexTextContainer>
         <StyledParagraph color="#000" fontSize="20px">
