@@ -16,4 +16,6 @@ router.put(
   check('password').isLength({ min: 5, max: 20 }),
   userControllers.login
 );
+router.put('/logout', userControllers.logout);
+router.put('/cart', userControllers.addItemToCart);
 module.exports = router;

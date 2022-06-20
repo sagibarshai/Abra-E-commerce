@@ -24,7 +24,11 @@ const signup = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
+  const errorsObj = validationResult(req);
   const { email, password, isloggedIn } = req.body;
+  if (!errorsObj.isEmpty()) {
+    return res.json({ errorMessage: 'invalid inputs' });
+  }
   const users = await UserSchema.find();
   for (let user of users) {
     let userData = { email, isloggedIn, password };
@@ -32,7 +36,7 @@ const login = async (req, res, next) => {
       user.isloggedIn = true;
       UserSchema.updateOne({ email: email }, { $set: { isloggedIn: true } })
         .then((doc) => {
-          return res.json({ user: doc });
+          console.log(doc);
         })
         .catch((err) => console.log(err));
       return res.json({ message: user });
@@ -40,6 +44,39 @@ const login = async (req, res, next) => {
   }
   return res.json({ errorMessage: 'not found ' });
 };
-exports.login = login;
+const logout = async (req, res, next) => {
+  const { userId } = req.body;
+  const users = await UserSchema.find();
+  for (let user of users) {
+    UserSchema.updateOne({ id: userId }, { $set: { isloggedIn: false } })
+      .then((doc) => {
+        console.log(doc);
+      })
+      .catch((err) => console.log(err));
+    return res.json({
+      message: 'Logged out!',
+    });
+  }
+  return res.json({ errorMessage: 'cannot logout' });
+};
 
+const addItemToCart = async (req, res, next) => {
+  const { userId, productObj } = req.body;
+  // const { name } = productObj;
+  const users = await UserSchema.find();
+  for (let user of users) {
+    UserSchema.updateOne({ id: userId }, { $set: { username: 1 } })
+      .then((doc) => {
+        console.log(doc);
+      })
+      .catch((err) => console.log(err));
+    return res.json({
+      message: 'updated!',
+    });
+  }
+};
+
+exports.login = login;
+exports.logout = logout;
 exports.signup = signup;
+exports.addItemToCart = addItemToCart;
