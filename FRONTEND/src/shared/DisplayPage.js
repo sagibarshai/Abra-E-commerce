@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   StyledTitle,
@@ -10,21 +10,16 @@ import {
 import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
 import Cart from './Cart';
 export default (props) => {
-  const [render, setRender] = useState(false);
+  const userId = localStorage.getItem('userId') || null;
+
   const addToCarHandler = (productObj) => {
-    let currentQty = Number(localStorage.getItem(productObj.name) || 0);
-    localStorage.setItem(productObj.name, currentQty + 1);
-    setRender(!render);
-    fetch('http://localhost:5500', {
-      method: 'POST',
-      body: { message: 'hello' },
-      headers: {
-        'Content-type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((resJson) => console.log(resJson))
-      .catch((err) => console.og(err));
+    axios
+      .put(`http://localhost:5500/api/auth/cart}`, {
+        userId,
+        productObj,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (

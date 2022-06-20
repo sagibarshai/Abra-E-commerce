@@ -15,6 +15,7 @@ export const StyledUserLogo = styled.img`
   width: 36px;
   height: 36px;
   margin-right: 36px;
+  vertical-align: middle;
 `;
 export const StyledNav = styled.nav`
   display: flex;
@@ -37,4 +38,9 @@ export const StyledButton = styled.button`
   height: fit-content;
   border: none;
   cursor: pointer;
+`;
+export const StyledUsername = styled.span`
+  color: white;
+  font-size: 16px;
+  vertical-align: middle;
 `;

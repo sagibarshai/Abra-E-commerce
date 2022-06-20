@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   StyledCartConainer,
   StyledParagraph,
@@ -16,26 +17,9 @@ import {
   StyledFlexTextContainer,
 } from './StyledCart';
 import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
-import { useState, useEffect } from 'react';
-import { allProducts } from '../data/products';
-import axios from 'axios';
-function allStorage() {
-  var values = [],
-    keys = Object.keys(localStorage),
-    i = keys.length;
 
-  while (i--) {
-    values.push(localStorage.getItem(keys[i]));
-  }
-
-  return [keys, values];
-}
-const [localStorageKeys, localStorageValues] = allStorage();
 export default (props) => {
   const [itemsInCart, setItemsInCart] = useState([]);
-
-  // console.log(itemsInCart);
-
   return (
     <StyledCartConainer>
       <StyledTitle>My Cart</StyledTitle>

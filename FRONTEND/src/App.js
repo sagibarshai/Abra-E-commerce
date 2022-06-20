@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import { useContext, useState, useEffect } from 'react';
@@ -11,16 +10,31 @@ import Sport from './pages/Sport';
 import BestSellers from './pages/BestSellers';
 import Singup from './pages/Singup';
 import Login from './pages/Login';
+import { getAllLocalStorage } from './utils/getAllLocalStorage';
 const App = () => {
+  const [userId, setUserId] = useState(localStorage.getItem('userId' || null));
+  const [username, setUsername] = useState(
+    localStorage.getItem('userId' || null)
+  );
   const [userIsLoggedin, setUserIsLoggedin] = useState(false);
   const products = useContext(Products);
-  const logoutHandler = () => {
-    setUserIsLoggedin(false);
-  };
+  useEffect(() => {
+    if (getAllLocalStorage().length === 2) {
+      setUserId(localStorage.getItem('userId'));
+      setUserIsLoggedin(true);
+      setUsername(localStorage.getItem('username'));
+    }
+  }, []);
   return (
     <>
       <BrowserRouter>
-        <Header userIsLoggedin={userIsLoggedin} logoutHandler={logoutHandler} />
+        <Header
+          userIsLoggedin={userIsLoggedin}
+          userId={userId}
+          setUserId={setUserId}
+          setUserIsLoggedin={setUserIsLoggedin}
+          username={username}
+        />
         <Products.Provider>
           <Routes>
             <Route path="/home" exect element={<Home products={products} />} />
@@ -52,6 +66,8 @@ const App = () => {
                 <Login
                   userIsLoggedin={userIsLoggedin}
                   setUserIsLoggedin={setUserIsLoggedin}
+                  setUserId={setUserId}
+                  setUsername={setUsername}
                 />
               }
             />

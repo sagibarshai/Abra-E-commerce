@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import {
   StyledHeader,
@@ -7,7 +7,9 @@ import {
   StyledLogo,
   StyledUserLogo,
   StyledButton,
-} from './style/StyledHeader';
+  StyledUsername,
+} from './StyledHeader';
+import { logoutHandler } from '../../utils/logoutHandler';
 import { ReactComponent as Logo } from '../../svg/logo.svg';
 import userIcon from '../../svg/userIcon.png';
 const NAV_LINKS = [
@@ -50,9 +52,7 @@ const NAV_AUTH_LINKS = [
   },
 ];
 export default (props) => {
-  const authHandler = () => {
-    console.log('auth');
-  };
+  const authHandler = () => {};
   return (
     <StyledHeader>
       <Link to="/home">
@@ -83,13 +83,16 @@ export default (props) => {
       </StyledNav>
       {props.userIsLoggedin && (
         <>
-          <span>Hello {'username'}</span>
+          <StyledUsername>Hello {props.username}</StyledUsername>
           <StyledButton onClick={authHandler}>
             <StyledUserLogo src={userIcon} />
           </StyledButton>
           <StyledLink>
             <NavLink
-              onClick={props.logoutHandler}
+              onClick={() => {
+                console.log('from header logout' + props.userId);
+                logoutHandler(props.userId, props.setUserIsLoggedin);
+              }}
               to="/logout"
               style={({ isActive }) => {
                 return {
