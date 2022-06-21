@@ -25,5 +25,5 @@ mongoose
     })
   )
   .catch((err) => {
-    console.log(err);
+    console.log(err + 'cannot connect to db !');
   });

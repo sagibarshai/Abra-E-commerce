@@ -32,7 +32,7 @@ const login = async (req, res, next) => {
       user.isloggedIn = true;
       UserSchema.updateOne({ email: email }, { $set: { isloggedIn: true } })
         .then((doc) => {
-          return res.json({ user: doc });
+          console.log(doc);
         })
         .catch((err) => console.log(err));
       return res.json({ message: user });
