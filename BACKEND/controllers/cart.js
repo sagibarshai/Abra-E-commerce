@@ -24,20 +24,61 @@ const addItemToCart = async (req, res, next) => {
         { cartId: userId },
         { $set: { totalPrice: totalCartPrice } }
       );
+      await CartSchema.updateOne(
+        { cartId: userId },
+        { $set: { items: cartItems } }
+      );
+      res.json({ cartItems: cartItems, totalPrice: totalCartPrice });
     }
   }
-  await CartSchema.updateOne(
-    { cartId: userId },
-    { $set: { items: cartItems } }
-  );
-
-  res.json({ message: productObj });
 };
 
 const getCartByUserId = async (req, res, next) => {
   const { userId } = req.params;
-  console.log(userId);
-  res.json({ userId: userId });
+  const carts = await CartSchema.find();
+  for (let cart of carts) {
+    if (cart.cartId === userId) {
+      const { items, totalPrice } = cart;
+      return res.json({ items, items, totalPrice: totalPrice });
+    }
+  }
+  return res.json({ messageError: 'Not found' });
 };
+
+const increseItemByOne = async (req, res, next) => {
+  const { userId } = req.params;
+  const { itemName } = req.body;
+  const carts = await CartSchema.find();
+  let exitingCart;
+  for (let cart of carts) {
+    if (cart.cartId === userId) exitingCart = cart;
+  }
+  const { items, cartId } = exitingCart;
+  const exitingItem = items.find((item) => item.name === itemName);
+  if (exitingItem) {
+    const { cartQty } = exitingItem;
+    const updatedQty = cartQty + 1;
+    console.log(cartQty, updatedQty);
+    console.log(userId === cartId);
+    let result;
+    try {
+      result = await CartSchema.updateOne(
+        { cartId: userId },
+        { $set: { cartQty: updatedQty } }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+    return res.json({ message: result });
+  }
+};
+const decreseItemByOne = (req, res, next) => {
+  const { id } = req.params;
+};
+const deleteItemById = (req, res, next) => {
+  const { id } = req.params;
+};
+
+exports.increseItemByOne = increseItemByOne;
 exports.addItemToCart = addItemToCart;
 exports.getCartByUserId = getCartByUserId;

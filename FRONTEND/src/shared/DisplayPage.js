@@ -10,18 +10,33 @@ import {
 import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
 import Cart from './Cart';
 export default (props) => {
+  const [itemsInCart, setItemsInCart] = useState([]);
+  const [totalPrice, setToalPrice] = useState();
   const userId = localStorage.getItem('userId') || null;
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5500/api/users/${userId}`)
+      .then((res) => {
+        setItemsInCart(res.data.items);
+        setToalPrice(res.data.totalPrice);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const addToCarHandler = (productObj) => {
     axios
       .put(`http://localhost:5500/api/users/${userId}`, { productObj, userId })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res.data.cartItems);
+        setItemsInCart(res.data.cartItems);
+        setToalPrice(res.data.totalPrice);
+      })
       .catch((err) => console.log(err));
   };
 
   return (
     <>
-      <StyledTitle>{props.title}</StyledTitle>;
+      <StyledTitle>{props.title}</StyledTitle>
       <StyledMainContainer>
         <StyledFlexContainer>
           {props.products.map((product, index) => {
@@ -32,7 +47,7 @@ export default (props) => {
                   {product.name}
                 </StyledText>
                 <StyledText color="#808285" marginTop="8px">
-                  {product.price}
+                  {product.price} ILS
                 </StyledText>
                 <StyledPraimaryButton
                   width="292px"
@@ -50,7 +65,11 @@ export default (props) => {
             );
           })}
         </StyledFlexContainer>
-        <Cart products={props.products} />
+        <Cart
+          itemsInCart={itemsInCart}
+          totalPrice={totalPrice}
+          userId={userId}
+        />
       </StyledMainContainer>
     </>
   );

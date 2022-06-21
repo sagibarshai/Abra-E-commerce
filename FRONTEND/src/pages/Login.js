@@ -1,5 +1,14 @@
 import React from 'react';
-import classes from './Login.module.css';
+import {
+  StyledMain,
+  StyledMainHeader,
+  StyledFirstParagraph,
+  StyledErrorsMessage,
+  StyledLabel,
+  StyledInput,
+  StyledButton,
+  StyledSecondParagraph,
+} from './StyledLogin';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { renderErrorContentHandler } from '../utils/errorContentControl';
@@ -42,59 +51,59 @@ export default (props) => {
   };
   return (
     <>
-      <div className={classes['underline']}></div>
-      <div className={classes['main-container']}>
-        <main>
-          <section>
-            <h1 className={classes['main-header']}>Login Form</h1>
-            <p className={classes['first_p']}>
-              Fill out the form below to login Abra E-commerce
-            </p>
-          </section>
-          {
-            <p className={classes['errors']}>
-              {renderErrorContentHandler(errorMessage)}
-            </p>
-          }
-          <section>
-            <form onSubmit={(event) => formSubmitHandler(event)}>
-              <label className={classes['label_email']} htmlFor="email">
-                Email
-              </label>
-              <br />
-              <input
-                className={classes['input_email']}
-                type="email"
-                placeholder="abra@labs.com"
-                value={email}
-                onChange={(event) => {
-                  inputHandler(event, 'email');
-                }}
-              />
-              <br />
-              <label className={classes['label_password']} htmlFor="password">
-                Password
-              </label>
-              <br />
-              <input
-                className={classes['input_password']}
-                type="password"
-                placeholder="Must be at least 5 characters"
-                value={password}
-                onChange={(event) => {
-                  inputHandler(event, 'password');
-                }}
-              />
-              <br />
-              <button type="submit">Login</button>
-              <p className={classes['second_p']}>
-                Don't have an account?{' '}
-                <Link to="/signup">sign in right now and start shop!</Link>
-              </p>
-            </form>
-          </section>
-        </main>
-      </div>
+      <StyledMain>
+        <StyledMainHeader>Login Form</StyledMainHeader>
+        <StyledFirstParagraph>
+          Fill out the form below to login Abra E-commerce
+        </StyledFirstParagraph>
+        {
+          <StyledErrorsMessage>
+            {renderErrorContentHandler(errorMessage)}
+          </StyledErrorsMessage>
+        }
+        <form onSubmit={(event) => formSubmitHandler(event)}>
+          <StyledLabel htmlFor="email">Email</StyledLabel>
+          <br />
+          <StyledInput
+            className="input_email"
+            type="email"
+            placeholder="abra@labs.com"
+            value={email}
+            onChange={(event) => {
+              inputHandler(event, 'email');
+            }}
+          />
+          <br />
+          <StyledLabel className="label_password" htmlFor="password">
+            Password
+          </StyledLabel>
+          <br />
+          <StyledInput
+            className="input_password"
+            type="password"
+            placeholder="Must be at least 5 characters"
+            value={password}
+            onChange={(event) => {
+              inputHandler(event, 'password');
+            }}
+          />
+          <br />
+          <StyledButton type="submit">Login</StyledButton>
+          <StyledSecondParagraph className="second_p">
+            Don't have an account?{' '}
+            <Link
+              to="/signup"
+              style={{
+                fontWeight: 600,
+                color: '#ff9f00',
+                textDecoration: 'underline',
+              }}
+            >
+              sign in right now and start shop!
+            </Link>
+          </StyledSecondParagraph>
+        </form>
+      </StyledMain>
     </>
   );
   {

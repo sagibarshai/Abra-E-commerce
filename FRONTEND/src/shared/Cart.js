@@ -19,7 +19,24 @@ import {
 import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
 
 export default (props) => {
-  const [itemsInCart, setItemsInCart] = useState([]);
+  const deleteItemHandler = (itemName) => {
+    axios
+      .delete(`http://localhost:5500/api/users/${props.userId}`, itemName)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+  const increseQtyByOneHandler = (itemName) => {
+    axios
+      .put(`http://localhost:5500/api/users/${props.userId}/increse`, {
+        itemName,
+      })
+      .then((res) => console.log(res));
+  };
+  const decreseQtyByOneHandler = (itemName) => {
+    axios
+      .put(`http://localhost:5500/api/users/${props.userId}`)
+      .catch((err) => console.log(err));
+  };
   return (
     <StyledCartConainer>
       <StyledTitle>My Cart</StyledTitle>
@@ -32,72 +49,53 @@ export default (props) => {
         Items are reserved for 60 minutes
       </StyledParagraph>
       <StyledItemsContainer>
-        {itemsInCart.map((item, index) => {
-          return (
-            <StyledFlexItem key={index}>
-              <StyledImgContainer>
-                <StyledImg src={item.imgSrc} />
-              </StyledImgContainer>
-              <StyledTextContainer>
-                <StyledTextFlexContainer flexDirection="column">
-                  <StyledItemTitle>Black T-shirt</StyledItemTitle>
-                  <StyledItemPrice>89 ILS</StyledItemPrice>
-                  <StyledTextFlexContainer
-                    flexDirection="row"
-                    justifyContant="space-between"
-                    marginTop="30px"
-                  >
-                    <div>
-                      <StyledIncreseAndDecreseButton>
-                        -
-                      </StyledIncreseAndDecreseButton>
-                      {item.cartQty}
-                      <StyledIncreseAndDecreseButton>
-                        +
-                      </StyledIncreseAndDecreseButton>
-                    </div>
-                    <StyledXButton>X</StyledXButton>
+        {props.itemsInCart &&
+          props.itemsInCart.map((item, index) => {
+            return (
+              <StyledFlexItem key={index}>
+                <StyledImgContainer>
+                  <StyledImg src={item.imgSrc} />
+                </StyledImgContainer>
+                <StyledTextContainer>
+                  <StyledTextFlexContainer flexDirection="column">
+                    <StyledItemTitle>{item.name}</StyledItemTitle>
+                    <StyledItemPrice>{item.price} ILS</StyledItemPrice>
+                    <StyledTextFlexContainer
+                      flexDirection="row"
+                      justifyContant="space-between"
+                      marginTop="30px"
+                    >
+                      <div>
+                        <StyledIncreseAndDecreseButton
+                          onClick={decreseQtyByOneHandler}
+                        >
+                          -
+                        </StyledIncreseAndDecreseButton>
+                        {item.cartQty}
+                        <StyledIncreseAndDecreseButton
+                          onClick={() => {
+                            increseQtyByOneHandler(item.name);
+                          }}
+                        >
+                          +
+                        </StyledIncreseAndDecreseButton>
+                      </div>
+                      <StyledXButton onClick={deleteItemHandler}>
+                        X
+                      </StyledXButton>
+                    </StyledTextFlexContainer>
                   </StyledTextFlexContainer>
-                </StyledTextFlexContainer>
-              </StyledTextContainer>
-            </StyledFlexItem>
-          );
-        })}
-        {/*
-        <StyledFlexItem>
-          <StyledImgContainer>
-            <StyledImg src="/images/tshirt.jpg" />
-          </StyledImgContainer>
-          <StyledTextContainer>
-            <StyledTextFlexContainer flexDirection="column">
-              <StyledItemTitle>Black T-shirt</StyledItemTitle>
-              <StyledItemPrice>89 ILS</StyledItemPrice>
-              <StyledTextFlexContainer
-                flexDirection="row"
-                justifyContant="space-between"
-                marginTop="30px"
-              >
-                <div>
-                  <StyledIncreseAndDecreseButton>
-                    -
-                  </StyledIncreseAndDecreseButton>
-                  {1}
-                  <StyledIncreseAndDecreseButton>
-                    +
-                  </StyledIncreseAndDecreseButton>
-                </div>
-                <StyledXButton>X</StyledXButton>
-              </StyledTextFlexContainer>
-            </StyledTextFlexContainer>
-          </StyledTextContainer>
-        </StyledFlexItem> */}
+                </StyledTextContainer>
+              </StyledFlexItem>
+            );
+          })}
       </StyledItemsContainer>
       <StyledFlexTextContainer>
         <StyledParagraph color="#000" fontSize="20px">
           Subtotal
         </StyledParagraph>
         <StyledParagraph color="#000" fontSize="20px">
-          176 ILS
+          {props.totalPrice} ILS
         </StyledParagraph>
       </StyledFlexTextContainer>
       <StyledPraimaryButton

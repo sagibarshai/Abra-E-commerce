@@ -1,9 +1,19 @@
 import React from 'react';
+
 import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
-import classes from './Signup.module.css';
 import axios from 'axios';
 import { renderErrorContentHandler } from '../utils/errorContentControl';
+import {
+  StyledMain,
+  StyledMainHeader,
+  StyledFirstParagraph,
+  StyledErrorsMessage,
+  StyledLabel,
+  StyledInput,
+  StyledButton,
+  StyledSecondParagraph,
+} from './StyledLogin';
 export default () => {
   const navigate = useNavigate();
   const [renderErrorContent, setRenderErrorContent] = useState('');
@@ -49,109 +59,75 @@ export default () => {
 
   return (
     <>
-      <div className={classes['underline']}></div>
-      <div className={classes['main-container']}>
-        <main>
-          <section>
-            <h1 className={classes['main-header']}>Login Form</h1>
-            <p className={classes['first_p']}>
-              Fill out the form below to signup Abra E-commerce
-            </p>
-          </section>
-          {
-            <p className={classes['errors']}>
-              {renderErrorContentHandler(renderErrorContent)}
-            </p>
-          }
-          <section>
-            <form
-              onSubmit={(event) => {
-                formSubmitHandler(event);
+      <StyledMain>
+        <StyledMainHeader>Login Form</StyledMainHeader>
+        <StyledFirstParagraph>
+          Fill out the form below to signup Abra E-commerce
+        </StyledFirstParagraph>
+
+        {
+          <StyledErrorsMessage>
+            {renderErrorContentHandler(renderErrorContent)}
+          </StyledErrorsMessage>
+        }
+
+        <form
+          onSubmit={(event) => {
+            formSubmitHandler(event);
+          }}
+        >
+          <StyledLabel htmlFor="username">Username</StyledLabel>
+          <br />
+          <StyledInput
+            id="username"
+            type="text"
+            value={username}
+            placeholder="Username"
+            onChange={(event) => {
+              inputHandler(event, 'username');
+            }}
+          />
+          <br />
+          <StyledLabel htmlFor="email">Email</StyledLabel>
+          <br />
+          <StyledInput
+            id="email"
+            placeholder="Abra@labs.com"
+            type="email"
+            value={email}
+            onChange={(event) => {
+              inputHandler(event, 'email');
+            }}
+          />
+          <br />
+          <StyledLabel htmlFor="password">password</StyledLabel>
+          <br />
+          <StyledInput
+            id="password"
+            placeholder="Must be at least 5 characters"
+            type="password"
+            value={password}
+            onChange={(event) => {
+              inputHandler(event, 'password');
+            }}
+          />
+          <br />
+          <StyledButton type="submit">Login</StyledButton>
+          <StyledSecondParagraph>
+            Already have an account?{' '}
+            <Link
+              to="/login"
+              style={{
+                fontWeight: 600,
+                color: '#ff9f00',
+                textDecoration: 'underline',
               }}
             >
-              <label className={classes['label_email']} htmlFor="email">
-                Username
-              </label>
-              <br />
-              <input
-                className={classes['input_email']}
-                type="text"
-                value={username}
-                placeholder="username"
-                onChange={(event) => {
-                  inputHandler(event, 'username');
-                }}
-              />
-              <br />
-              <label className={classes['label_password']} htmlFor="password">
-                Email
-              </label>
-              <br />
-              <input
-                className={classes['input_email']}
-                placeholder="Must be at least 5 characters"
-                type="email"
-                value={email}
-                onChange={(event) => {
-                  inputHandler(event, 'email');
-                }}
-              />
-              <br />
-              <label className={classes['label_password']} htmlFor="password">
-                password
-              </label>
-              <br />
-              <input
-                className={classes['input_password']}
-                placeholder="Must be at least 5 characters"
-                type="password"
-                value={password}
-                onChange={(event) => {
-                  inputHandler(event, 'password');
-                }}
-              />
-              <br />
-              <button type="submit">Login</button>
-              <p className={classes['second_p']}>
-                Already have an account?{' '}
-                <Link to="/login">take me to login!</Link>
-              </p>
-            </form>
-          </section>
-        </main>
-      </div>
+              take me to login!
+            </Link>
+          </StyledSecondParagraph>
+        </form>
+      </StyledMain>
     </>
-    // <form
-    //   onSubmit={(event) => {
-    //     formSubmitHandler(event);
-    //   }}
-    // >
-    //   {renderErrorContentHandler(renderErrorContent)}
-    //   <input
-    //     type="text"
-    //     value={username}
-    //     placeholder="username"
-    //     onChange={(event) => {
-    //       inputHandler(event, 'username');
-    //     }}
-    //   />
-    //   <input
-    //     type="email"
-    //     value={email}
-    //     placeholder="Email"
-    //     onChange={(event) => {
-    //       inputHandler(event, 'email');
-    //     }}
-    //   />
-    //   <input
-    //     type="password"
-    //     value={password}
-    //     placeholder="password"
-    //     onChange={(event) => {
-    //       inputHandler(event, 'password');
-    //     }}
-    //   />
-    //   <button type="submit">Submit</button>
-    // </form>
   );
 };
