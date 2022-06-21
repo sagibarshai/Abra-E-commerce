@@ -90,7 +90,6 @@ export default (props) => {
           <StyledLink>
             <NavLink
               onClick={() => {
-                console.log('from header logout' + props.userId);
                 logoutHandler(props.userId, props.setUserIsLoggedin);
               }}
               to="/logout"
