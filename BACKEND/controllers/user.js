@@ -1,4 +1,5 @@
 const UserSchema = require('../models/user');
+const CartSchema = require('../models/cart');
 const { validationResult } = require('express-validator');
 
 const signup = async (req, res, next) => {
@@ -19,8 +20,15 @@ const signup = async (req, res, next) => {
     password,
     isloggedIn,
   });
-  const result = await newUser.save();
-  return res.json({ createdUser: result });
+  const userResult = await newUser.save();
+  const newCart = new CartSchema({
+    cartId: userResult.id,
+    items: [],
+    totalPrice: 0,
+  });
+  const cartResult = await newCart.save();
+
+  return res.json({ createdUser: userResult, createdCart: cartResult });
 };
 
 const login = async (req, res, next) => {
@@ -60,23 +68,6 @@ const logout = async (req, res, next) => {
   return res.json({ errorMessage: 'cannot logout' });
 };
 
-const addItemToCart = async (req, res, next) => {
-  const { userId, productObj } = req.body;
-  // const { name } = productObj;
-  const users = await UserSchema.find();
-  for (let user of users) {
-    UserSchema.updateOne({ id: userId }, { $set: { username: 1 } })
-      .then((doc) => {
-        console.log(doc);
-      })
-      .catch((err) => console.log(err));
-    return res.json({
-      message: 'updated!',
-    });
-  }
-};
-
 exports.login = login;
 exports.logout = logout;
 exports.signup = signup;
-exports.addItemToCart = addItemToCart;

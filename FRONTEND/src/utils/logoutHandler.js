@@ -8,5 +8,5 @@ export const logoutHandler = (userId, setUserIsLoggedin) => {
       userId,
     })
     .then((res) => console.log(res))
-    .catch((err) => console.log(err + 'err message'));
+    .catch((err) => console.log(err));
 };

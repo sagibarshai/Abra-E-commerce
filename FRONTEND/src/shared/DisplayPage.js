@@ -14,10 +14,7 @@ export default (props) => {
 
   const addToCarHandler = (productObj) => {
     axios
-      .put(`http://localhost:5500/api/auth/cart}`, {
-        userId,
-        productObj,
-      })
+      .put(`http://localhost:5500/api/users/${userId}`, { productObj, userId })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };

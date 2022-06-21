@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/users/user');
+const cartRoutes = require('./routes/cart/cart');
 const app = express();
 app.use(
   cors({
@@ -13,6 +14,7 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api/auth', userRoutes);
+app.use('/api/users', cartRoutes);
 const url = `mongodb+srv://adhtcrah:akuorc1010@cluster0.fsvsblk.mongodb.net/users?retryWrites=true&w=majority`;
 mongoose
   .connect(url)

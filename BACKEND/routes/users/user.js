@@ -17,5 +17,4 @@ router.put(
   userControllers.login
 );
 router.put('/logout', userControllers.logout);
-router.put('/cart', userControllers.addItemToCart);
 module.exports = router;
