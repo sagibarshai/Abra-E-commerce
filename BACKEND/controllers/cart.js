@@ -1,35 +1,27 @@
 const CartSchema = require('../models/cart');
 const addItemToCart = async (req, res, next) => {
-  const { userId, productObj } = req.body;
+  const { userId, itemsInCart, cartTotalPrice } = req.body;
   const carts = await CartSchema.find();
-  let cartItems = [];
-  for (let cart of carts) {
-    if (cart.cartId === userId) {
-      let totalCartPrice = cart.totalPrice;
-      cartItems = [...cart.items];
-      const exitingItem = cartItems.find(
-        (item) => item.name === productObj.name
-      );
-      if (exitingItem) {
-        exitingItem.cartQty++;
-        totalCartPrice += exitingItem.price;
-      } else {
-        productObj.cartQty = 1;
-        totalCartPrice += productObj.price;
-
-        cartItems.push(productObj);
-      }
-      const { items, totalPrice } = cart;
-      await CartSchema.updateOne(
+  let priceResult;
+  let itemsResult;
+  let exititngCart = carts.find((cart) => cart.cartId === userId);
+  if (exititngCart) {
+    const { items, totalPrice } = exititngCart;
+    try {
+      priceResult = await CartSchema.updateOne(
         { cartId: userId },
-        { $set: { totalPrice: totalCartPrice } }
+        { $set: { totalPrice: cartTotalPrice } }
       );
-      await CartSchema.updateOne(
+      itemsResult = await CartSchema.updateOne(
         { cartId: userId },
-        { $set: { items: cartItems } }
+        { $set: { items: itemsInCart } }
       );
-      res.json({ cartItems: cartItems, totalPrice: totalCartPrice });
+      return res.json({ message: 'updated' });
+    } catch (err) {
+      console.log(err);
     }
+  } else {
+    return res.json({ errorMessage: 'not found' });
   }
 };
 
@@ -44,7 +36,7 @@ const getCartByUserId = async (req, res, next) => {
         totalPrice += item.cartQty * item.price;
       }
 
-      return res.json({ items, items, totalPrice: totalPrice });
+      return res.json({ items, totalPrice });
     }
   }
   return res.json({ messageError: 'Not found' });
@@ -52,79 +44,48 @@ const getCartByUserId = async (req, res, next) => {
 
 const increseItemByOne = async (req, res, next) => {
   const { userId } = req.params;
-  const { productObj, totalPrice, itemsInCart } = req.body;
+  const { updatedTotalPrice, itemsInCart } = req.body;
   const carts = await CartSchema.find();
-  // let cartItems = [];
-  for (let cart of carts) {
-    if (cart.cartId === userId) {
+  const exititngCart = carts.find((cart) => cart.cartId === userId);
+  if (exititngCart) {
+    try {
       await CartSchema.updateOne(
         { cartId: userId },
-        { $set: { totalPrice: totalPrice } }
+        { $set: { totalPrice: updatedTotalPrice } }
       );
       await CartSchema.updateOne(
         { cartId: userId },
         { $set: { items: itemsInCart } }
       );
+      return res.json({ message: 'updated' });
+    } catch (err) {
+      console.log(err);
     }
-    //     // let totalCartPrice = cart.totalPrice;
-    //     // cartItems = [...cart.items];
-    //     const exitingItem = itemsInCart.find(
-    //       (item) => item.name === productObj.name
-    //     );
-    //     // if (exitingItem) {
-    //     //   exitingItem.cartQty++;
-    //     //   totalCartPrice += exitingItem.price;
-    //     // }
-    //     const { items } = cart;
+  } else {
+    return res.json({ errorMessage: 'not found' });
   }
 };
+
 const decreseItemByOne = async (req, res, next) => {
   const { userId } = req.params;
-  const { productObj, totalPrice, itemsInCart } = req.body;
+  const { totalCartPrice, itemsInCart } = req.body;
   const carts = await CartSchema.find();
-  // let cartItems = [];
-  for (let cart of carts) {
-    if (cart.cartId === userId) {
-      await CartSchema.updateOne(
-        { cartId: userId },
-        { $set: { totalPrice: totalPrice } }
-      );
-      await CartSchema.updateOne(
-        { cartId: userId },
-        { $set: { items: itemsInCart } }
-      );
-    }
-    // const { userId } = req.params;
-    // const { productObj } = req.body;
-    // const carts = await CartSchema.find();
-    // let cartItems = [];
-    // for (let cart of carts) {
-    //   if (cart.cartId === userId) {
-    //     let totalCartPrice = cart.totalPrice;
-    //     cartItems = [...cart.items];
-    //     const exitingItem = cartItems.find(
-    //       (item) => item.name === productObj.name
-    //     );
-    //     if (exitingItem) {
-    //       if (exitingItem.cartQty === 1) {
-    //         cartItems = cartItems.filter((item) => item !== exitingItem);
-    //       }
-    //       exitingItem.cartQty--;
-    //       totalCartPrice -= exitingItem.price;
-    //     }
-    //     const { items, totalPrice } = cart;
-    //     await CartSchema.updateOne(
-    //       { cartId: userId },
-    //       { $set: { totalPrice: totalCartPrice } }
-    //     );
-    //     await CartSchema.updateOne(
-    //       { cartId: userId },
-    //       { $set: { items: cartItems } }
-    //     );
-    //     res.json({ cartItems: cartItems, totalPrice: totalCartPrice });
-    //   }
+  const exititngCart = carts.find((cart) => cart.cartId === userId);
+  if (exititngCart) {
+    const priceResult = await CartSchema.updateOne(
+      { cartId: userId },
+      { $set: { totalPrice: totalCartPrice } }
+    );
+    const itemResult = await CartSchema.updateOne(
+      { cartId: userId },
+      { $set: { items: itemsInCart } }
+    );
+    return res.json({ itemResult, priceResult });
+  } else {
+    return res.json({ errorMessage: 'Not found' });
   }
 };
+
 const deleteItemById = async (req, res, next) => {
   const { userId } = req.params;
   const { productObj } = req.body;
@@ -139,10 +100,7 @@ const deleteItemById = async (req, res, next) => {
       );
       if (exitingItem) {
         cartItems = cartItems.filter((item) => item !== exitingItem);
-        console.log(
-          'total' + totalCartPrice,
-          exitingItem.price + '$' + exitingItem.cartQty
-        );
+
         totalCartPrice =
           totalCartPrice - exitingItem.price * exitingItem.cartQty;
         exitingItem.cartQty = 0;

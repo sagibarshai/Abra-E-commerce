@@ -25,7 +25,7 @@ export default (props) => {
     axios
       .get(`http://localhost:5500/api/users/${props.userId}`)
       .then((res) => {
-        props.setToalPrice(res.data.totalPrice);
+        props.setTotalPrice(res.data.totalPrice);
         props.setItemsInCart(res.data.cartItems);
       })
       .catch((err) => console.log(err));
@@ -37,7 +37,7 @@ export default (props) => {
         productObj,
       })
       .then((res) => {
-        props.setToalPrice(res.data.totalPrice);
+        props.setTotalPrice(res.data.totalPrice);
         props.setItemsInCart(res.data.cartItems);
       })
       .catch((err) => console.log(err));
@@ -48,62 +48,66 @@ export default (props) => {
     const exitingItem = itemsInCart.find(
       (item) => item.name === productObj.name
     );
-    exitingItem.cartQty++;
     const exitingItemIndex = itemsInCart.findIndex(
       (item) => item.name === productObj.name
     );
+    const updatedQty = exitingItem.cartQty + 1;
+    const updatedProduct = { ...productObj, cartQty: updatedQty };
     let updatedItemsInCart = itemsInCart;
-    updatedItemsInCart[exitingItemIndex] = exitingItem;
+    updatedItemsInCart[exitingItemIndex] = updatedProduct;
     props.setItemsInCart(updatedItemsInCart);
-    const updatedPrice =
-      updatedItemsInCart[exitingItemIndex].cartQty * productObj.price;
-    props.setToalPrice(updatedPrice);
-
+    const updatedTotalPrice = totalPrice + productObj.price;
+    props.setTotalPrice(updatedTotalPrice);
     axios
       .put(`http://localhost:5500/api/users/${props.userId}/increse`, {
         productObj,
-        totalPrice,
-        itemsInCart,
+        updatedTotalPrice,
+        itemsInCart: updatedItemsInCart,
       })
-      .then((res) => {
-        props.setToalPrice(res.data.totalPrice);
-        props.setItemsInCart(res.data.cartItems);
-      })
+      .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
 
   const decreseQtyByOneHandler = (productObj) => {
     const { totalPrice, itemsInCart } = props;
+    let updatedItemsInCart;
+    let updatedPrice;
+    let updatedProduct;
+    let updatedQty;
     const exitingItem = itemsInCart.find(
       (item) => item.name === productObj.name
     );
-    if (exitingItem.cartQty === 0) {
-      const updatedItemsInCart = itemsInCart.filter(
-        (item) => item.cartQty !== 0
-      );
-      return props.setItemsInCart(updatedItemsInCart);
-    }
-    exitingItem.cartQty--;
     const exitingItemIndex = itemsInCart.findIndex(
       (item) => item.name === productObj.name
     );
-    let updatedItemsInCart = itemsInCart;
-    updatedItemsInCart[exitingItemIndex] = exitingItem;
-    props.setItemsInCart(updatedItemsInCart);
-    const updatedPrice =
-      updatedItemsInCart[exitingItemIndex].cartQty * productObj.price;
-    props.setToalPrice(updatedPrice);
-
+    if (exitingItem.cartQty === 1) {
+      updatedQty = 0;
+      updatedProduct = exitingItem;
+      updatedProduct.cartQty = updatedQty;
+      updatedItemsInCart = [...itemsInCart];
+      updatedItemsInCart[exitingItemIndex] = updatedProduct;
+      updatedItemsInCart = updatedItemsInCart.filter(
+        (item) => item.cartQty !== 0
+      );
+      props.setItemsInCart(updatedItemsInCart);
+      updatedPrice = props.totalPrice - exitingItem.price;
+      props.setTotalPrice(updatedPrice);
+    } else {
+      updatedQty = exitingItem.cartQty - 1;
+      updatedProduct = exitingItem;
+      updatedProduct.cartQty = updatedQty;
+      updatedItemsInCart = itemsInCart;
+      updatedItemsInCart[exitingItemIndex] = updatedProduct;
+      props.setItemsInCart(updatedItemsInCart);
+      updatedPrice = totalPrice - updatedItemsInCart[exitingItemIndex].price;
+      props.setTotalPrice(updatedPrice);
+    }
     axios
       .put(`http://localhost:5500/api/users/${props.userId}/decrese`, {
-        productObj,
-        totalPrice,
-        itemsInCart,
+        totalCartPrice: updatedPrice,
+        itemsInCart: updatedItemsInCart,
       })
-      .then((res) => {
-        props.setToalPrice(res.data.totalPrice);
-        props.setItemsInCart(res.data.cartItems);
-      })
+      .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
   return (

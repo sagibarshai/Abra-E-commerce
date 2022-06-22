@@ -11,29 +11,60 @@ import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
 import Cart from './Cart';
 export default (props) => {
   const [itemsInCart, setItemsInCart] = useState([]);
-  const [totalPrice, setToalPrice] = useState();
+  const [totalPrice, setTotalPrice] = useState();
   const userId = localStorage.getItem('userId') || null;
   useEffect(() => {
     axios
       .get(`http://localhost:5500/api/users/${userId}`)
       .then((res) => {
         setItemsInCart(res.data.items);
-        setToalPrice(res.data.totalPrice);
+        setTotalPrice(res.data.totalPrice);
+        console.log(res);
       })
       .catch((err) => console.log(err));
   }, []);
 
   const addToCarHandler = (productObj) => {
+    let updatedItemsInCart;
+    let updatedTotalPrice;
+    if (itemsInCart) {
+      const exitingItem = itemsInCart.find(
+        (item) => item.name === productObj.name
+      );
+      if (!exitingItem) {
+        productObj.cartQty = 1;
+        updatedItemsInCart = [...itemsInCart, productObj];
+        setItemsInCart(updatedItemsInCart);
+        updatedTotalPrice = totalPrice + productObj.price;
+        setTotalPrice(updatedTotalPrice);
+      } else {
+        const exitingItemIndex = itemsInCart.findIndex(
+          (item) => item.name === productObj.name
+        );
+        let updatedQty = exitingItem.cartQty + 1;
+        let updatedProductObj = { ...productObj, cartQty: updatedQty };
+        updatedItemsInCart = [...itemsInCart];
+        updatedItemsInCart[exitingItemIndex] = updatedProductObj;
+        updatedTotalPrice = totalPrice + productObj.price;
+        setTotalPrice(updatedTotalPrice);
+        setItemsInCart(updatedItemsInCart);
+      }
+    } else {
+      updatedItemsInCart = productObj;
+      updatedItemsInCart = [{ ...productObj, cartQty: 1 }];
+      updatedTotalPrice = productObj.price;
+      setTotalPrice(updatedTotalPrice);
+      setItemsInCart([updatedItemsInCart]);
+    }
     axios
-      .put(`http://localhost:5500/api/users/${userId}`, { productObj, userId })
-      .then((res) => {
-        console.log(res.data.cartItems);
-        setItemsInCart(res.data.cartItems);
-        setToalPrice(res.data.totalPrice);
+      .put(`http://localhost:5500/api/users/${userId}`, {
+        userId,
+        itemsInCart: updatedItemsInCart,
+        cartTotalPrice: updatedTotalPrice,
       })
+      .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-
   return (
     <>
       <StyledTitle>{props.title}</StyledTitle>
@@ -70,7 +101,7 @@ export default (props) => {
           totalPrice={totalPrice}
           userId={userId}
           setItemsInCart={setItemsInCart}
-          setToalPrice={setToalPrice}
+          setTotalPrice={setTotalPrice}
         />
       </StyledMainContainer>
     </>
