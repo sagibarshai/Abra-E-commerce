@@ -69,6 +69,8 @@ export default (props) => {
           itemsInCart={itemsInCart}
           totalPrice={totalPrice}
           userId={userId}
+          setItemsInCart={setItemsInCart}
+          setToalPrice={setToalPrice}
         />
       </StyledMainContainer>
     </>

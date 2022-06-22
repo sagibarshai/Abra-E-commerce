@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   StyledCartConainer,
@@ -19,22 +19,91 @@ import {
 import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
 
 export default (props) => {
-  const deleteItemHandler = (itemName) => {
+  const [itemQty, setItemQty] = useState();
+
+  useEffect(() => {
     axios
-      .delete(`http://localhost:5500/api/users/${props.userId}`, itemName)
-      .then((res) => console.log(res))
+      .get(`http://localhost:5500/api/users/${props.userId}`)
+      .then((res) => {
+        props.setToalPrice(res.data.totalPrice);
+        props.setItemsInCart(res.data.cartItems);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const deleteItemHandler = (productObj) => {
+    axios
+      .put(`http://localhost:5500/api/users/${props.userId}/delete`, {
+        productObj,
+      })
+      .then((res) => {
+        props.setToalPrice(res.data.totalPrice);
+        props.setItemsInCart(res.data.cartItems);
+      })
       .catch((err) => console.log(err));
   };
-  const increseQtyByOneHandler = (itemName) => {
+
+  const increseQtyByOneHandler = (productObj) => {
+    const { totalPrice, itemsInCart } = props;
+    const exitingItem = itemsInCart.find(
+      (item) => item.name === productObj.name
+    );
+    exitingItem.cartQty++;
+    const exitingItemIndex = itemsInCart.findIndex(
+      (item) => item.name === productObj.name
+    );
+    let updatedItemsInCart = itemsInCart;
+    updatedItemsInCart[exitingItemIndex] = exitingItem;
+    props.setItemsInCart(updatedItemsInCart);
+    const updatedPrice =
+      updatedItemsInCart[exitingItemIndex].cartQty * productObj.price;
+    props.setToalPrice(updatedPrice);
+
     axios
       .put(`http://localhost:5500/api/users/${props.userId}/increse`, {
-        itemName,
+        productObj,
+        totalPrice,
+        itemsInCart,
       })
-      .then((res) => console.log(res));
+      .then((res) => {
+        props.setToalPrice(res.data.totalPrice);
+        props.setItemsInCart(res.data.cartItems);
+      })
+      .catch((err) => console.log(err));
   };
-  const decreseQtyByOneHandler = (itemName) => {
+
+  const decreseQtyByOneHandler = (productObj) => {
+    const { totalPrice, itemsInCart } = props;
+    const exitingItem = itemsInCart.find(
+      (item) => item.name === productObj.name
+    );
+    if (exitingItem.cartQty === 0) {
+      const updatedItemsInCart = itemsInCart.filter(
+        (item) => item.cartQty !== 0
+      );
+      return props.setItemsInCart(updatedItemsInCart);
+    }
+    exitingItem.cartQty--;
+    const exitingItemIndex = itemsInCart.findIndex(
+      (item) => item.name === productObj.name
+    );
+    let updatedItemsInCart = itemsInCart;
+    updatedItemsInCart[exitingItemIndex] = exitingItem;
+    props.setItemsInCart(updatedItemsInCart);
+    const updatedPrice =
+      updatedItemsInCart[exitingItemIndex].cartQty * productObj.price;
+    props.setToalPrice(updatedPrice);
+
     axios
-      .put(`http://localhost:5500/api/users/${props.userId}`)
+      .put(`http://localhost:5500/api/users/${props.userId}/decrese`, {
+        productObj,
+        totalPrice,
+        itemsInCart,
+      })
+      .then((res) => {
+        props.setToalPrice(res.data.totalPrice);
+        props.setItemsInCart(res.data.cartItems);
+      })
       .catch((err) => console.log(err));
   };
   return (
@@ -67,20 +136,26 @@ export default (props) => {
                     >
                       <div>
                         <StyledIncreseAndDecreseButton
-                          onClick={decreseQtyByOneHandler}
+                          onClick={() => {
+                            decreseQtyByOneHandler(item);
+                          }}
                         >
                           -
                         </StyledIncreseAndDecreseButton>
                         {item.cartQty}
                         <StyledIncreseAndDecreseButton
                           onClick={() => {
-                            increseQtyByOneHandler(item.name);
+                            increseQtyByOneHandler(item);
                           }}
                         >
                           +
                         </StyledIncreseAndDecreseButton>
                       </div>
-                      <StyledXButton onClick={deleteItemHandler}>
+                      <StyledXButton
+                        onClick={() => {
+                          deleteItemHandler(item);
+                        }}
+                      >
                         X
                       </StyledXButton>
                     </StyledTextFlexContainer>

@@ -38,7 +38,12 @@ const getCartByUserId = async (req, res, next) => {
   const carts = await CartSchema.find();
   for (let cart of carts) {
     if (cart.cartId === userId) {
-      const { items, totalPrice } = cart;
+      const { items } = cart;
+      let totalPrice = 0;
+      for (let item of cart.items) {
+        totalPrice += item.cartQty * item.price;
+      }
+
       return res.json({ items, items, totalPrice: totalPrice });
     }
   }
@@ -47,38 +52,117 @@ const getCartByUserId = async (req, res, next) => {
 
 const increseItemByOne = async (req, res, next) => {
   const { userId } = req.params;
-  const { itemName } = req.body;
+  const { productObj, totalPrice, itemsInCart } = req.body;
   const carts = await CartSchema.find();
-  let exitingCart;
+  // let cartItems = [];
   for (let cart of carts) {
-    if (cart.cartId === userId) exitingCart = cart;
-  }
-  const { items, cartId } = exitingCart;
-  const exitingItem = items.find((item) => item.name === itemName);
-  if (exitingItem) {
-    const { cartQty } = exitingItem;
-    const updatedQty = cartQty + 1;
-    console.log(cartQty, updatedQty);
-    console.log(userId === cartId);
-    let result;
-    try {
-      result = await CartSchema.updateOne(
+    if (cart.cartId === userId) {
+      await CartSchema.updateOne(
         { cartId: userId },
-        { $set: { cartQty: updatedQty } }
+        { $set: { totalPrice: totalPrice } }
       );
-    } catch (err) {
-      console.log(err);
+      await CartSchema.updateOne(
+        { cartId: userId },
+        { $set: { items: itemsInCart } }
+      );
     }
-    return res.json({ message: result });
+    //     // let totalCartPrice = cart.totalPrice;
+    //     // cartItems = [...cart.items];
+    //     const exitingItem = itemsInCart.find(
+    //       (item) => item.name === productObj.name
+    //     );
+    //     // if (exitingItem) {
+    //     //   exitingItem.cartQty++;
+    //     //   totalCartPrice += exitingItem.price;
+    //     // }
+    //     const { items } = cart;
   }
 };
-const decreseItemByOne = (req, res, next) => {
-  const { id } = req.params;
+const decreseItemByOne = async (req, res, next) => {
+  const { userId } = req.params;
+  const { productObj, totalPrice, itemsInCart } = req.body;
+  const carts = await CartSchema.find();
+  // let cartItems = [];
+  for (let cart of carts) {
+    if (cart.cartId === userId) {
+      await CartSchema.updateOne(
+        { cartId: userId },
+        { $set: { totalPrice: totalPrice } }
+      );
+      await CartSchema.updateOne(
+        { cartId: userId },
+        { $set: { items: itemsInCart } }
+      );
+    }
+    // const { userId } = req.params;
+    // const { productObj } = req.body;
+    // const carts = await CartSchema.find();
+    // let cartItems = [];
+    // for (let cart of carts) {
+    //   if (cart.cartId === userId) {
+    //     let totalCartPrice = cart.totalPrice;
+    //     cartItems = [...cart.items];
+    //     const exitingItem = cartItems.find(
+    //       (item) => item.name === productObj.name
+    //     );
+    //     if (exitingItem) {
+    //       if (exitingItem.cartQty === 1) {
+    //         cartItems = cartItems.filter((item) => item !== exitingItem);
+    //       }
+    //       exitingItem.cartQty--;
+    //       totalCartPrice -= exitingItem.price;
+    //     }
+    //     const { items, totalPrice } = cart;
+    //     await CartSchema.updateOne(
+    //       { cartId: userId },
+    //       { $set: { totalPrice: totalCartPrice } }
+    //     );
+    //     await CartSchema.updateOne(
+    //       { cartId: userId },
+    //       { $set: { items: cartItems } }
+    //     );
+    //     res.json({ cartItems: cartItems, totalPrice: totalCartPrice });
+    //   }
+  }
 };
-const deleteItemById = (req, res, next) => {
-  const { id } = req.params;
+const deleteItemById = async (req, res, next) => {
+  const { userId } = req.params;
+  const { productObj } = req.body;
+  const carts = await CartSchema.find();
+  let cartItems = [];
+  for (let cart of carts) {
+    if (cart.cartId === userId) {
+      let totalCartPrice = cart.totalPrice;
+      cartItems = [...cart.items];
+      const exitingItem = cartItems.find(
+        (item) => item.name === productObj.name
+      );
+      if (exitingItem) {
+        cartItems = cartItems.filter((item) => item !== exitingItem);
+        console.log(
+          'total' + totalCartPrice,
+          exitingItem.price + '$' + exitingItem.cartQty
+        );
+        totalCartPrice =
+          totalCartPrice - exitingItem.price * exitingItem.cartQty;
+        exitingItem.cartQty = 0;
+      }
+      const { items, totalPrice } = cart;
+      await CartSchema.updateOne(
+        { cartId: userId },
+        { $set: { totalPrice: totalCartPrice } }
+      );
+      await CartSchema.updateOne(
+        { cartId: userId },
+        { $set: { items: cartItems } }
+      );
+      return res.json({ cartItems: cartItems, totalPrice: totalCartPrice });
+    }
+  }
 };
 
-exports.increseItemByOne = increseItemByOne;
 exports.addItemToCart = addItemToCart;
 exports.getCartByUserId = getCartByUserId;
+exports.deleteItemById = deleteItemById;
+exports.increseItemByOne = increseItemByOne;
+exports.decreseItemByOne = decreseItemByOne;
