@@ -25,6 +25,7 @@ export default (props) => {
   }, []);
 
   const addToCarHandler = (productObj) => {
+    if (!userId) return alert('Please Login');
     let updatedItemsInCart;
     let updatedTotalPrice;
     if (itemsInCart) {
@@ -81,6 +82,8 @@ export default (props) => {
                   {product.price} ILS
                 </StyledText>
                 <StyledPraimaryButton
+                  hoverColor="#fff"
+                  hoverBackgroundColor="#000"
                   width="292px"
                   backgroundColor="#fff"
                   color="#000"
@@ -90,13 +93,14 @@ export default (props) => {
                     addToCarHandler(product);
                   }}
                 >
-                  Buy now
+                  ADD TO BAG
                 </StyledPraimaryButton>
               </StyledItem>
             );
           })}
         </StyledFlexContainer>
         <Cart
+          style={{ height: '2500px' }}
           itemsInCart={itemsInCart}
           totalPrice={totalPrice}
           userId={userId}

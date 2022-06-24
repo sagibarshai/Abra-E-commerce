@@ -57,6 +57,7 @@ export const StyledButton = styled.button`
   color: #fff;
   background-color: #ff9f00;
   border: none;
+  cursor: pointer;
 `;
 export const StyledSecondParagraph = styled.p`
   margin: 8px auto 0 auto;

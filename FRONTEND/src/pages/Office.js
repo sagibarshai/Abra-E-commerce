@@ -6,7 +6,6 @@ export default ({ products }) => {
     ...returenTypeOfItem(products, 'Office'),
     ...returenTypeOfItem(products, 'Office'),
     ...returenTypeOfItem(products, 'Office'),
-    ...returenTypeOfItem(products, 'Office'),
   ];
   return <DisplayPage products={officeProducts} title="Office Products" />;
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
@@ -16,33 +15,42 @@ import {
 } from './StyledLogin';
 export default () => {
   const navigate = useNavigate();
-  const [renderErrorContent, setRenderErrorContent] = useState('');
+  const [renderContent, setRenderContent] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const formSubmitHandler = async (e) => {
     e.preventDefault();
     if (username === '' || password === '' || email === '') {
-      setRenderErrorContent(<div>Please fill all inputs</div>);
+      setRenderContent(<div>Please fill all inputs</div>);
     }
-    const userData = { username, password, email, isloggedIn: false };
+    let lowerCaseEmail = email.trim().toLocaleLowerCase();
+    const userData = {
+      username,
+      password,
+      email: lowerCaseEmail,
+      isloggedIn: false,
+    };
     axios
       .post('http://localhost:5500/api/auth/signup', userData)
       .then((res) => {
         if (res.data.errorMessage) {
-          setRenderErrorContent(res.data.errorMessage);
+          setRenderContent(res.data.errorMessage);
         } else {
-          setRenderErrorContent(`hello ${res.data.createdUser.username}!
+          setRenderContent(`hello ${res.data.createdUser.username}!
           We just created your user.
           Welcome!`);
           setEmail('');
           setPassword('');
           setUsername('');
+          setTimeout(() => {
+            navigate('/login');
+          }, 5000);
         }
       })
       .catch((err) => {
         console.log(err + ' err');
-        setRenderErrorContent(
+        setRenderContent(
           'an error occured on the server, please try again later'
         );
       });
@@ -58,76 +66,72 @@ export default () => {
   };
 
   return (
-    <>
-      <StyledMain>
-        <StyledMainHeader>Login Form</StyledMainHeader>
-        <StyledFirstParagraph>
-          Fill out the form below to signup Abra E-commerce
-        </StyledFirstParagraph>
+    <StyledMain>
+      <StyledMainHeader>Signup Form</StyledMainHeader>
+      <StyledFirstParagraph>
+        Fill out the form below to signup Abra E-commerce
+      </StyledFirstParagraph>
 
-        {
-          <StyledErrorsMessage>
-            {renderErrorContentHandler(renderErrorContent)}
-          </StyledErrorsMessage>
-        }
+      <StyledErrorsMessage>
+        {renderErrorContentHandler(renderContent)}
+      </StyledErrorsMessage>
 
-        <form
-          onSubmit={(event) => {
-            formSubmitHandler(event);
+      <form
+        onSubmit={(event) => {
+          formSubmitHandler(event);
+        }}
+      >
+        <StyledLabel htmlFor="username">Username</StyledLabel>
+        <br />
+        <StyledInput
+          id="username"
+          type="text"
+          value={username}
+          placeholder="Username"
+          onChange={(event) => {
+            inputHandler(event, 'username');
           }}
-        >
-          <StyledLabel htmlFor="username">Username</StyledLabel>
-          <br />
-          <StyledInput
-            id="username"
-            type="text"
-            value={username}
-            placeholder="Username"
-            onChange={(event) => {
-              inputHandler(event, 'username');
+        />
+        <br />
+        <StyledLabel htmlFor="email">Email</StyledLabel>
+        <br />
+        <StyledInput
+          id="email"
+          placeholder="Abra@labs.com"
+          type="email"
+          value={email}
+          onChange={(event) => {
+            inputHandler(event, 'email');
+          }}
+        />
+        <br />
+        <StyledLabel htmlFor="password">password</StyledLabel>
+        <br />
+        <StyledInput
+          id="password"
+          placeholder="Must be at least 5 characters"
+          type="password"
+          value={password}
+          onChange={(event) => {
+            inputHandler(event, 'password');
+          }}
+        />
+        <br />
+        <StyledButton type="submit">Signup</StyledButton>
+        <StyledSecondParagraph>
+          Already have an account?
+          <Link
+            to="/login"
+            style={{
+              fontWeight: 600,
+              color: '#ff9f00',
+              textDecoration: 'underline',
             }}
-          />
-          <br />
-          <StyledLabel htmlFor="email">Email</StyledLabel>
-          <br />
-          <StyledInput
-            id="email"
-            placeholder="Abra@labs.com"
-            type="email"
-            value={email}
-            onChange={(event) => {
-              inputHandler(event, 'email');
-            }}
-          />
-          <br />
-          <StyledLabel htmlFor="password">password</StyledLabel>
-          <br />
-          <StyledInput
-            id="password"
-            placeholder="Must be at least 5 characters"
-            type="password"
-            value={password}
-            onChange={(event) => {
-              inputHandler(event, 'password');
-            }}
-          />
-          <br />
-          <StyledButton type="submit">Login</StyledButton>
-          <StyledSecondParagraph>
-            Already have an account?{' '}
-            <Link
-              to="/login"
-              style={{
-                fontWeight: 600,
-                color: '#ff9f00',
-                textDecoration: 'underline',
-              }}
-            >
-              take me to login!
-            </Link>
-          </StyledSecondParagraph>
-        </form>
-      </StyledMain>
-    </>
+          >
+            take me to login!
+          </Link>
+        </StyledSecondParagraph>
+      </form>
+    </StyledMain>
   );
 };

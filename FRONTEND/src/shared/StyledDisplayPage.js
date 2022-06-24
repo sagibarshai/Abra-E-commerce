@@ -3,7 +3,10 @@ export const StyledMainContainer = styled.main`
   margin-left: 24px;
   font-family: 'Assistant', sans-serif;
   margin-bottom: 100px;
-  height: 1600px;
+  height: 100%;
+  /* @media (max-width: 400px) {
+    width: 400px;
+  } */
 `;
 export const StyledTitle = styled.h1`
   margin: 64px 117px 40px 24px;
@@ -21,6 +24,9 @@ export const StyledFlexContainer = styled.div`
   column-gap: 24px;
   height: auto;
   width: 1556px;
+  /* @media (max-width: 400px) {
+    width: min-content;
+  } */
 
   /* background-color: blue; */
 `;

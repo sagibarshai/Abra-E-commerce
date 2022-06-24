@@ -12,4 +12,12 @@ export const StyledPraimaryButton = styled.button`
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.72px;
+  transition: all 0.5s ease-out;
+  &:disabled {
+    background-color: #808080;
+  }
+  &:hover {
+    background-color: ${(props) => props.hoverBackgroundColor};
+    color: ${(props) => props.hoverColor};
+  }
 `;

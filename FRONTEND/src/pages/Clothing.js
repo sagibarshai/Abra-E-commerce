@@ -7,6 +7,7 @@ export default ({ products }) => {
     ...returenTypeOfItem(products, 'Clothing'),
     ...returenTypeOfItem(products, 'Clothing'),
     ...returenTypeOfItem(products, 'Clothing'),
+    ...returenTypeOfItem(products, 'Clothing'),
   ];
   return <DisplayPage products={clothingProducts} title="Clothing Products" />;
 };

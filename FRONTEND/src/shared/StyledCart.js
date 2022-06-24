@@ -12,6 +12,9 @@ export const StyledCartConainer = styled.aside`
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
   padding-left: 24px;
   padding-right: 24px;
+  /* @media (max-width: 400px) {
+    display: none;
+  } */
 `;
 export const StyledTitle = styled.h2`
   margin-top: 40px;
@@ -45,8 +48,9 @@ export const StyledImgContainer = styled.div`
   height: 100px;
 `;
 export const StyledImg = styled.img`
-  width: 100px;
-  height: 100px;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  margin-top: ${(props) => props.marginTop};
 `;
 export const StyledTextContainer = styled.div`
   display: inline-block;
@@ -93,4 +97,7 @@ export const StyledFlexTextContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 268px;
+`;
+export const StyledParagraphMessage = styled.p`
+  margin: 24px auto 156px auto;
 `;

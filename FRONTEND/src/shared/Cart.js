@@ -15,12 +15,11 @@ import {
   StyledFlexItem,
   StyledImg,
   StyledFlexTextContainer,
+  StyledParagraphMessage,
 } from './StyledCart';
 import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
 
 export default (props) => {
-  const [itemQty, setItemQty] = useState();
-
   useEffect(() => {
     axios
       .get(`http://localhost:5500/api/users/${props.userId}`)
@@ -113,75 +112,98 @@ export default (props) => {
   return (
     <StyledCartConainer>
       <StyledTitle>My Cart</StyledTitle>
-      <StyledParagraph
-        color="#000"
-        fontSize="16px"
-        marginTop="9px"
-        marginBottom="34px"
-      >
-        Items are reserved for 60 minutes
-      </StyledParagraph>
-      <StyledItemsContainer>
-        {props.itemsInCart &&
-          props.itemsInCart.map((item, index) => {
-            return (
-              <StyledFlexItem key={index}>
-                <StyledImgContainer>
-                  <StyledImg src={item.imgSrc} />
-                </StyledImgContainer>
-                <StyledTextContainer>
-                  <StyledTextFlexContainer flexDirection="column">
-                    <StyledItemTitle>{item.name}</StyledItemTitle>
-                    <StyledItemPrice>{item.price} ILS</StyledItemPrice>
-                    <StyledTextFlexContainer
-                      flexDirection="row"
-                      justifyContant="space-between"
-                      marginTop="30px"
-                    >
-                      <div>
-                        <StyledIncreseAndDecreseButton
-                          onClick={() => {
-                            decreseQtyByOneHandler(item);
-                          }}
-                        >
-                          -
-                        </StyledIncreseAndDecreseButton>
-                        {item.cartQty}
-                        <StyledIncreseAndDecreseButton
-                          onClick={() => {
-                            increseQtyByOneHandler(item);
-                          }}
-                        >
-                          +
-                        </StyledIncreseAndDecreseButton>
-                      </div>
-                      <StyledXButton
-                        onClick={() => {
-                          deleteItemHandler(item);
-                        }}
+      {props.itemsInCart && props.itemsInCart.length > 0 && (
+        <>
+          <StyledParagraph
+            color="#000"
+            fontSize="16px"
+            marginTop="9px"
+            marginBottom="34px"
+          >
+            Items are reserved for 60 minutes
+          </StyledParagraph>
+
+          <StyledItemsContainer>
+            {props.itemsInCart.map((item, index) => {
+              return (
+                <StyledFlexItem key={index}>
+                  <StyledImgContainer>
+                    <StyledImg src={item.imgSrc} width="100px" height="100px" />
+                  </StyledImgContainer>
+                  <StyledTextContainer>
+                    <StyledTextFlexContainer flexDirection="column">
+                      <StyledItemTitle>{item.name}</StyledItemTitle>
+                      <StyledItemPrice>{item.price} ILS</StyledItemPrice>
+                      <StyledTextFlexContainer
+                        flexDirection="row"
+                        justifyContant="space-between"
+                        marginTop="30px"
                       >
-                        X
-                      </StyledXButton>
+                        <div>
+                          <StyledIncreseAndDecreseButton
+                            onClick={() => {
+                              decreseQtyByOneHandler(item);
+                            }}
+                          >
+                            -
+                          </StyledIncreseAndDecreseButton>
+                          {item.cartQty}
+                          <StyledIncreseAndDecreseButton
+                            onClick={() => {
+                              increseQtyByOneHandler(item);
+                            }}
+                          >
+                            +
+                          </StyledIncreseAndDecreseButton>
+                        </div>
+                        <StyledXButton
+                          onClick={() => {
+                            deleteItemHandler(item);
+                          }}
+                        >
+                          X
+                        </StyledXButton>
+                      </StyledTextFlexContainer>
                     </StyledTextFlexContainer>
-                  </StyledTextFlexContainer>
-                </StyledTextContainer>
-              </StyledFlexItem>
-            );
-          })}
-      </StyledItemsContainer>
-      <StyledFlexTextContainer>
-        <StyledParagraph color="#000" fontSize="20px">
-          Subtotal
-        </StyledParagraph>
-        <StyledParagraph color="#000" fontSize="20px">
-          {props.totalPrice} ILS
-        </StyledParagraph>
-      </StyledFlexTextContainer>
+                  </StyledTextContainer>
+                </StyledFlexItem>
+              );
+            })}
+          </StyledItemsContainer>
+        </>
+      )}
+      <>
+        {props.itemsInCart && props.itemsInCart.length > 0 && (
+          <StyledFlexTextContainer>
+            <StyledParagraph color="#000" fontSize="20px">
+              Subtotal
+            </StyledParagraph>
+            <StyledParagraph color="#000" fontSize="20px">
+              {props.totalPrice} ILS
+            </StyledParagraph>
+          </StyledFlexTextContainer>
+        )}
+      </>
+      {props.itemsInCart && !props.itemsInCart.length && (
+        <>
+          <StyledImg src="/images/empty-cart.png" marginTop="227px" />
+          <StyledParagraphMessage>Your cart is empty</StyledParagraphMessage>
+        </>
+      )}
+      {!props.userId && (
+        <>
+          <StyledImg src="/images/empty-cart.png" marginTop="227px" />
+          <StyledParagraphMessage>Your cart is empty</StyledParagraphMessage>
+        </>
+      )}
       <StyledPraimaryButton
         backgroundColor="#000"
         color="white"
         marginTop="24px"
         width="268px"
+        disabled={
+          (props.itemsInCart && !props.itemsInCart.length) || !props.userId
+        }
       >
         CHECKOUT
       </StyledPraimaryButton>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import { useContext, useState, useEffect } from 'react';
 import { Products } from './data/products';
@@ -37,6 +37,12 @@ const App = () => {
         />
         <Products.Provider>
           <Routes>
+            <Route path="/" exect element={<Navigate to="/signup" />} />
+            <Route
+              path="/logout"
+              exect
+              element={<Navigate to="/best-sellers" />}
+            />
             <Route path="/home" exect element={<Home products={products} />} />
             <Route
               path="/office"
