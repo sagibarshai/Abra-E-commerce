@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
+import MobileCart from './MobileCart';
 import {
   StyledCartConainer,
   StyledParagraph,
-  StyledTitle,
+  StyledCartTitle,
   StyledItemsContainer,
   StyledItemTitle,
   StyledItemPrice,
@@ -16,9 +17,8 @@ import {
   StyledImg,
   StyledFlexTextContainer,
   StyledParagraphMessage,
-} from './StyledCart';
+} from './StyledDesktopCart';
 import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
-
 export default (props) => {
   useEffect(() => {
     axios
@@ -110,103 +110,117 @@ export default (props) => {
       .catch((err) => console.log(err));
   };
   return (
-    <StyledCartConainer>
-      <StyledTitle>My Cart</StyledTitle>
-      {props.itemsInCart && props.itemsInCart.length > 0 && (
-        <>
-          <StyledParagraph
-            color="#000"
-            fontSize="16px"
-            marginTop="9px"
-            marginBottom="34px"
-          >
-            Items are reserved for 60 minutes
-          </StyledParagraph>
-
-          <StyledItemsContainer>
-            {props.itemsInCart.map((item, index) => {
-              return (
-                <StyledFlexItem key={index}>
-                  <StyledImgContainer>
-                    <StyledImg src={item.imgSrc} width="100px" height="100px" />
-                  </StyledImgContainer>
-                  <StyledTextContainer>
-                    <StyledTextFlexContainer flexDirection="column">
-                      <StyledItemTitle>{item.name}</StyledItemTitle>
-                      <StyledItemPrice>{item.price} ILS</StyledItemPrice>
-                      <StyledTextFlexContainer
-                        flexDirection="row"
-                        justifyContant="space-between"
-                        marginTop="30px"
-                      >
-                        <div>
-                          <StyledIncreseAndDecreseButton
-                            onClick={() => {
-                              decreseQtyByOneHandler(item);
-                            }}
-                          >
-                            -
-                          </StyledIncreseAndDecreseButton>
-                          {item.cartQty}
-                          <StyledIncreseAndDecreseButton
-                            onClick={() => {
-                              increseQtyByOneHandler(item);
-                            }}
-                          >
-                            +
-                          </StyledIncreseAndDecreseButton>
-                        </div>
-                        <StyledXButton
-                          onClick={() => {
-                            deleteItemHandler(item);
-                          }}
-                        >
-                          X
-                        </StyledXButton>
-                      </StyledTextFlexContainer>
-                    </StyledTextFlexContainer>
-                  </StyledTextContainer>
-                </StyledFlexItem>
-              );
-            })}
-          </StyledItemsContainer>
-        </>
-      )}
-      <>
+    <>
+      <StyledCartConainer>
+        <StyledCartTitle>My Cart</StyledCartTitle>
         {props.itemsInCart && props.itemsInCart.length > 0 && (
-          <StyledFlexTextContainer>
-            <StyledParagraph color="#000" fontSize="20px">
-              Subtotal
+          <>
+            <StyledParagraph
+              display="none"
+              color="#000"
+              fontSize="16px"
+              marginTop="9px"
+              marginBottom="34px"
+            >
+              Items are reserved for 60 minutes
             </StyledParagraph>
-            <StyledParagraph color="#000" fontSize="20px">
-              {props.totalPrice} ILS
-            </StyledParagraph>
-          </StyledFlexTextContainer>
+
+            <StyledItemsContainer>
+              {props.itemsInCart.map((item, index) => {
+                return (
+                  <StyledFlexItem key={index}>
+                    <StyledImgContainer>
+                      <StyledImg
+                        src={item.imgSrc}
+                        width="100px"
+                        height="100px"
+                      />
+                    </StyledImgContainer>
+                    <StyledTextContainer>
+                      <StyledTextFlexContainer flexDirection="column">
+                        <StyledItemTitle>{item.name}</StyledItemTitle>
+                        <StyledItemPrice>{item.price} ILS</StyledItemPrice>
+                        <StyledTextFlexContainer
+                          flexDirection="row"
+                          justifyContant="space-between"
+                          marginTop="30px"
+                        >
+                          <div>
+                            <StyledIncreseAndDecreseButton
+                              onClick={() => {
+                                decreseQtyByOneHandler(item);
+                              }}
+                            >
+                              -
+                            </StyledIncreseAndDecreseButton>
+                            {item.cartQty}
+                            <StyledIncreseAndDecreseButton
+                              onClick={() => {
+                                increseQtyByOneHandler(item);
+                              }}
+                            >
+                              +
+                            </StyledIncreseAndDecreseButton>
+                          </div>
+                          <StyledXButton
+                            onClick={() => {
+                              deleteItemHandler(item);
+                            }}
+                          >
+                            X
+                          </StyledXButton>
+                        </StyledTextFlexContainer>
+                      </StyledTextFlexContainer>
+                    </StyledTextContainer>
+                  </StyledFlexItem>
+                );
+              })}
+            </StyledItemsContainer>
+          </>
         )}
-      </>
-      {props.itemsInCart && !props.itemsInCart.length && (
         <>
-          <StyledImg src="/images/empty-cart.png" marginTop="227px" />
-          <StyledParagraphMessage>Your cart is empty</StyledParagraphMessage>
+          {props.itemsInCart && props.itemsInCart.length > 0 && (
+            <StyledFlexTextContainer>
+              <StyledParagraph color="#000" fontSize="20px">
+                Subtotal
+              </StyledParagraph>
+              <StyledParagraph color="#000" fontSize="20px">
+                {props.totalPrice} ILS
+              </StyledParagraph>
+            </StyledFlexTextContainer>
+          )}
         </>
-      )}
-      {!props.userId && (
-        <>
-          <StyledImg src="/images/empty-cart.png" marginTop="227px" />
-          <StyledParagraphMessage>Your cart is empty</StyledParagraphMessage>
-        </>
-      )}
-      <StyledPraimaryButton
-        backgroundColor="#000"
-        color="white"
-        marginTop="24px"
-        width="268px"
-        disabled={
-          (props.itemsInCart && !props.itemsInCart.length) || !props.userId
-        }
-      >
-        CHECKOUT
-      </StyledPraimaryButton>
-    </StyledCartConainer>
+        {props.itemsInCart && !props.itemsInCart.length && (
+          <>
+            <StyledImg src="/images/empty-cart.png" marginTop="227px" />
+            <StyledParagraphMessage>Your cart is empty</StyledParagraphMessage>
+          </>
+        )}
+        {!props.userId && (
+          <>
+            <StyledImg src="/images/empty-cart.png" marginTop="227px" />
+            <StyledParagraphMessage>Your cart is empty</StyledParagraphMessage>
+          </>
+        )}
+        <StyledPraimaryButton
+          backgroundColor="#000"
+          color="white"
+          marginTop="24px"
+          width="268px"
+          disabled={
+            (props.itemsInCart && !props.itemsInCart.length) || !props.userId
+          }
+        >
+          CHECKOUT
+        </StyledPraimaryButton>
+      </StyledCartConainer>
+      <MobileCart
+        itemsInCart={props.itemsInCart}
+        totalPrice={props.totalPrice}
+        decreseQtyByOneHandler={decreseQtyByOneHandler}
+        increseQtyByOneHandler={increseQtyByOneHandler}
+        deleteItemHandler={deleteItemHandler}
+      />
+    </>
   );
 };

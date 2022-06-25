@@ -68,8 +68,8 @@ export default (props) => {
   };
   return (
     <>
-      <StyledTitle>{props.title}</StyledTitle>
       <StyledMainContainer>
+        <StyledTitle>{props.title}</StyledTitle>
         <StyledFlexContainer>
           {props.products.map((product, index) => {
             return (

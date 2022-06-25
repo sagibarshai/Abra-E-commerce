@@ -1,10 +1,8 @@
 import styled from 'styled-components';
+import { BR } from '../data/cssBrakePoints';
+const { mobileM } = BR;
 export const StyledCartConainer = styled.aside`
-  max-width: 316px;
   height: 1599px;
-  position: absolute;
-  left: 1580px;
-  top: 72px;
   margin-left: 24px;
   display: flex;
   flex-direction: column;
@@ -12,11 +10,12 @@ export const StyledCartConainer = styled.aside`
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
   padding-left: 24px;
   padding-right: 24px;
-  /* @media (max-width: 400px) {
+  flex-grow: 1.9;
+  @media ${mobileM} {
     display: none;
-  } */
+  }
 `;
-export const StyledTitle = styled.h2`
+export const StyledCartTitle = styled.h2`
   margin-top: 40px;
   color: #1a223e;
   font-size: 40px;
@@ -65,12 +64,12 @@ export const StyledTextFlexContainer = styled.div`
 `;
 
 export const StyledItemTitle = styled.span`
-  font-size: 20px;
+  font-size: 14px;
   line-height: 1;
   color: #000;
 `;
 export const StyledItemPrice = styled.span`
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1;
   color: #808285;
   margin-top: 8px;

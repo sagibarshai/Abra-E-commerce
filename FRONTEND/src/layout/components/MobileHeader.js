@@ -25,7 +25,7 @@ let ALL_LINKS = [...NAV_LINKS, ...NAV_AUTH_LINKS];
 ALL_LINKS = ALL_LINKS.filter((link) => link.to !== '/logout');
 console.log(ALL_LINKS);
 const MobileHeader = (props) => {
-  const [toggleMenu, setToggleMenu] = useState(true);
+  const [toggleMenu, setToggleMenu] = useState(false);
   const toggleMenuHandler = () => {
     setToggleMenu((prevState) => !prevState);
   };
@@ -86,6 +86,10 @@ const MobileHeader = (props) => {
               <NavLink
                 onClick={() => {
                   logoutHandler(props.userId, props.setUserIsLoggedin);
+                  setTimeout(() => {
+                    toggleMenuHandler();
+                    window.location.reload();
+                  }, 2000);
                 }}
                 to="/logout"
                 style={({ isActive }) => {
