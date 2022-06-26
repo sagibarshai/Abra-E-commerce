@@ -32,9 +32,12 @@ export default (props) => {
 
   const deleteItemHandler = (productObj) => {
     axios
-      .put(process.env.REACT_APP_BACKEND_URL + `/users/${props.userId}/delete`, {
-        productObj,
-      })
+      .put(
+        process.env.REACT_APP_BACKEND_URL + `/users/${props.userId}/delete`,
+        {
+          productObj,
+        }
+      )
       .then((res) => {
         props.setTotalPrice(res.data.totalPrice);
         props.setItemsInCart(res.data.cartItems);
@@ -105,10 +108,13 @@ export default (props) => {
       props.setTotalPrice(updatedPrice);
     }
     axios
-      .put(process.env.REACT_APP_BACKEND_URL +`/users/${props.userId}/decrese`, {
-        totalCartPrice: updatedPrice,
-        itemsInCart: updatedItemsInCart,
-      })
+      .put(
+        process.env.REACT_APP_BACKEND_URL + `/users/${props.userId}/decrese`,
+        {
+          totalCartPrice: updatedPrice,
+          itemsInCart: updatedItemsInCart,
+        }
+      )
       .then((res) => {})
       .catch((err) => console.log(err));
   };

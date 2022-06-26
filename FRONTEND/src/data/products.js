@@ -11,7 +11,7 @@ export const allProducts = {
     {
       name: 'White Mouse Pad',
       price: 57,
-      imgSrc: '/images/wPad.jpg',
+      imgSrc: '/images/WPad.jpg',
       types: ['Home', 'Office', 'Best_Sellers'],
       cartQty: 0,
     },
@@ -39,7 +39,7 @@ export const allProducts = {
     {
       name: 'White Mug',
       price: 24,
-      imgSrc: '/images/mug.png',
+      imgSrc: '/images/wMug.png',
       types: ['Home', 'Office', 'best-sellers'],
       cartQty: 0,
     },
