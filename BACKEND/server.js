@@ -13,6 +13,17 @@ app.use(
 );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('FRONTEND/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(
+      path.resolve(__dirname, '../FRONTEND', '/build', 'index.html')
+    );
+  });
+}
+const port = process.env.PORT || 5500;
+
 app.use('/api/auth', userRoutes);
 app.use('/api/users', cartRoutes);
 const url = `mongodb+srv://adhtcrah:akuorc1010@cluster0.fsvsblk.mongodb.net/users?retryWrites=true&w=majority`;
@@ -22,8 +33,8 @@ mongoose
     console.log('connected to db');
   })
   .then(() =>
-    app.listen(5500, () => {
-      console.log('listen on port 5500');
+    app.listen(port, () => {
+      console.log(`listen on port ${port}`);
     })
   )
   .catch((err) => {
