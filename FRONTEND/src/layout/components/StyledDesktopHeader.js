@@ -2,10 +2,10 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BR } from '../../data/cssBrakePoints';
-const { laptopL, mobileL, desktop } = BR;
+const { desktop } = BR;
 export const StyledBigDesktopContainer = styled.div`
   display: none;
-  @media ${desktop} {
+  @media (min-width: 426px) {
     display: inline-block;
   }
 `;
@@ -51,6 +51,7 @@ export const StyledButton = styled.button`
 `;
 export const StyledUsername = styled.span`
   color: white;
-  font-size: 16px;
+  font-size: 22px;
   vertical-align: middle;
+  text-transform: capitalize;
 `;

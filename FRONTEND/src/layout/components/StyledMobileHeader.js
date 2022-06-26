@@ -29,7 +29,7 @@ export const StyledPraimaryLogo = styled.i`
   height: 24px;
   flex-grow: 0;
   margin: 20px auto;
-  object-fit: contain;
+  object-fit: fill;
 `;
 export const StyledFlexColumn = styled.div`
   display: flex;
@@ -43,6 +43,7 @@ export const StyledUserLogo = styled.img`
 export const StyledText = styled.span`
   color: white;
   font-size: 14px;
+  ${(props) => (props.capitalize ? `text-transform:capitalize` : '')}
 `;
 export const StyledMenuPopup = styled.div`
   width: 75%;

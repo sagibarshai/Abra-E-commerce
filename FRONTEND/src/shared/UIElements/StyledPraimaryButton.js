@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { BR } from '../../data/cssBrakePoints';
+const { mobileM } = BR;
 export const StyledPraimaryButton = styled.button`
   background-color: ${(props) => props.backgroundColor};
   color: ${(props) => props.color};
@@ -19,5 +21,11 @@ export const StyledPraimaryButton = styled.button`
   &:hover {
     background-color: ${(props) => props.hoverBackgroundColor};
     color: ${(props) => props.hoverColor};
+  }
+  @media ${mobileM} {
+    width: ${(props) => props.mobileWidth};
+    height: ${(props) => props.mobileHeight};
+    font-size: ${(props) => props.mobileFontSize};
+    border: solid 1px #000;
   }
 `;

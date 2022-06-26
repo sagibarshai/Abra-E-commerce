@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyledMediumMobileContainer,
   StyledMobileHeader,
@@ -21,15 +21,19 @@ import { ReactComponent as Logo } from '../../svg/logo.svg';
 import userIcon from '../../svg/userIcon.png';
 import { NAV_AUTH_LINKS, NAV_LINKS } from '../../shared/links';
 
-let ALL_LINKS = [...NAV_LINKS, ...NAV_AUTH_LINKS];
-ALL_LINKS = ALL_LINKS.filter((link) => link.to !== '/logout');
-console.log(ALL_LINKS);
 const MobileHeader = (props) => {
+  let ALL_LINKS = [...NAV_LINKS, ...NAV_AUTH_LINKS];
+  ALL_LINKS = ALL_LINKS.filter((link) => link.to !== '/logout');
+  const [navLinks, setNavLinks] = useState(ALL_LINKS);
   const [toggleMenu, setToggleMenu] = useState(false);
   const toggleMenuHandler = () => {
     setToggleMenu((prevState) => !prevState);
   };
-
+  useEffect(() => {
+    if (props.userIsLoggedin) {
+      setNavLinks(NAV_LINKS);
+    }
+  }, [props.userIsLoggedin]);
   return (
     <StyledMediumMobileContainer>
       <StyledMobileHeader>
@@ -43,7 +47,9 @@ const MobileHeader = (props) => {
           </StyledPraimaryLogo>
           <StyledFlexColumn>
             <StyledUserLogo src={userIcon} />
-            {props.username && <StyledText>{props.username}</StyledText>}
+            {props.username && (
+              <StyledText capitalize>{props.username}</StyledText>
+            )}
           </StyledFlexColumn>
         </StyledMobileContentContainer>
       </StyledMobileHeader>
@@ -57,14 +63,14 @@ const MobileHeader = (props) => {
             />
           </StyledPopupHeader>
           <StyledNavContainer>
-            {ALL_LINKS.map((link, index) => {
+            {navLinks.map((link, index) => {
               return (
                 <StyledLink key={index}>
                   <NavLink
                     onClick={() => {
                       setTimeout(() => {
                         toggleMenuHandler();
-                      }, 2000);
+                      }, 500);
                     }}
                     to={link.to}
                     style={({ isActive }) => {
@@ -81,28 +87,30 @@ const MobileHeader = (props) => {
                 </StyledLink>
               );
             })}
-            <NavLinkLogout>
-              <img src="/images/logout.png" />
-              <NavLink
-                onClick={() => {
-                  logoutHandler(props.userId, props.setUserIsLoggedin);
-                  setTimeout(() => {
-                    toggleMenuHandler();
-                    window.location.reload();
-                  }, 2000);
-                }}
-                to="/logout"
-                style={({ isActive }) => {
-                  return {
-                    paddingLeft: '4px',
-                    textDecoration: 'none',
-                    fontWeight: isActive ? '500' : '300',
-                  };
-                }}
-              >
-                Logout
-              </NavLink>
-            </NavLinkLogout>
+            {props.userIsLoggedin && (
+              <NavLinkLogout>
+                <img src="/images/logout.png" />
+                <NavLink
+                  onClick={() => {
+                    logoutHandler(props.userId, props.setUserIsLoggedin);
+                    setTimeout(() => {
+                      toggleMenuHandler();
+                      window.location.reload();
+                    }, 500);
+                  }}
+                  to="/logout"
+                  style={({ isActive }) => {
+                    return {
+                      paddingLeft: '4px',
+                      textDecoration: 'none',
+                      fontWeight: isActive ? '500' : '300',
+                    };
+                  }}
+                >
+                  Logout
+                </NavLink>
+              </NavLinkLogout>
+            )}
           </StyledNavContainer>
         </StyledMenuPopup>
       )}

@@ -6,6 +6,7 @@ import {
   StyledMainContainer,
   StyledItem,
   StyledText,
+  StyledImg,
 } from './StyledDisplayPage';
 import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
 import Cart from './Cart';
@@ -74,7 +75,7 @@ export default (props) => {
           {props.products.map((product, index) => {
             return (
               <StyledItem key={index}>
-                <img src={product.imgSrc} />
+                <StyledImg src={product.imgSrc} />
                 <StyledText color="#000" marginTop="16px">
                   {product.name}
                 </StyledText>
@@ -89,6 +90,9 @@ export default (props) => {
                   color="#000"
                   border="1px solid #000"
                   marginTop="16px"
+                  mobileWidth="160px"
+                  mobileHight="34px"
+                  mobileFontSize="14px"
                   onClick={() => {
                     addToCarHandler(product);
                   }}

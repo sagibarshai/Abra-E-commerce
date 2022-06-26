@@ -220,6 +220,7 @@ export default (props) => {
         decreseQtyByOneHandler={decreseQtyByOneHandler}
         increseQtyByOneHandler={increseQtyByOneHandler}
         deleteItemHandler={deleteItemHandler}
+        userId={props.userId}
       />
     </>
   );

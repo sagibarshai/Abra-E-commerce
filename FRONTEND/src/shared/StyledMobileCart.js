@@ -26,7 +26,8 @@ export const StyledFlexRowContainer = styled.div`
   justify-content: ${(props) => props.justifayContent};
   margin-top: ${(props) => props.marginTop};
   gap: 18px;
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
 `;
 export const StyledFlexColumnContainer = styled.div`
   display: flex;
@@ -35,13 +36,14 @@ export const StyledFlexColumnContainer = styled.div`
   gap: 8px;
 `;
 export const StyledImgContainer = styled.div`
-  width: 125px;
-  height: 125px;
-  position: relative;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  position: ${(props) => props.position};
+  ${(props) => (props.center ? `display: inline-block ; margin:0 auto;` : '')}
 `;
 export const StyledImg = styled.img`
-  width: 125px;
-  height: 125px;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
 `;
 export const StyledXButton = styled.button`
   font-size: 14px;
@@ -56,9 +58,16 @@ export const StyledButtonsContainer = styled.div`
   flex-direction: row;
   gap: 8px;
 `;
-export const StyledButton = styled.div``;
+export const StyledButton = styled.button`
+  border: none;
+  background-color: transparent;
+`;
 export const StyledFlexSpaceBetwwenContainer = styled.div``;
-export const StyledText = styled.div`
+export const StyledText = styled.span`
+  font-size: ${(props) => props.fontSize};
+  color: ${(props) => props.color};
+  ${(props) => (props.center ? `display:block ; margin:0 auto;` : '')};
+  margin-top: ${(props) => props.marginTop};
   font-size: ${(props) => props.fontSize};
   color: ${(props) => props.color};
 `;
