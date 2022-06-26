@@ -27,5 +27,7 @@ export const StyledPraimaryButton = styled.button`
     height: ${(props) => props.mobileHeight};
     font-size: ${(props) => props.mobileFontSize};
     border: solid 1px #000;
+    width: 100%;
+    padding: 0;
   }
 `;

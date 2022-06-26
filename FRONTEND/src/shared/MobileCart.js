@@ -107,14 +107,15 @@ const MobileCart = (props) => {
         <StyledFlexRowContainer
           marginTop="28px"
           justifayContent="space-between"
-        >
+          >
+
           {props.itemsInCart && props.itemsInCart.length !== 0 && (
             <>
               <StyledText>Subtotal</StyledText>
               <StyledText>{props.totalPrice}ILS</StyledText>
             </>
           )}
-        </StyledFlexRowContainer>
+            </StyledFlexRowContainer>
         <StyledPraimaryButton
           backgroundColor="#808080"
           width="339px"
