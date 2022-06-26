@@ -62,7 +62,6 @@ export const StyledButton = styled.button`
   border: none;
   background-color: transparent;
 `;
-export const StyledFlexSpaceBetwwenContainer = styled.div``;
 export const StyledText = styled.span`
   font-size: ${(props) => props.fontSize};
   color: ${(props) => props.color};

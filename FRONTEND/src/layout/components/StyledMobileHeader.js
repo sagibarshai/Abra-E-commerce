@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-import { BR } from '../../data/cssBrakePoints';
-const { laptopL, mobileL, mobileM } = BR;
 export const StyledMediumMobileContainer = styled.div`
   display: none;
   font-family: 'Assistant', sans-serif;
-  @media ${mobileM} {
+  @media (max-width: 1200px) {
     display: inline-block;
   }
 `;

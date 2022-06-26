@@ -14,7 +14,6 @@ import {
   StyledText,
 } from './StyledMobileCart';
 const MobileCart = (props) => {
-  console.log(props.userId);
   return (
     <StyledMobileCartContainer>
       <StyledTitle>My Cart</StyledTitle>

@@ -5,7 +5,7 @@ import { BR } from '../../data/cssBrakePoints';
 const { desktop } = BR;
 export const StyledBigDesktopContainer = styled.div`
   display: none;
-  @media (min-width: 426px) {
+  @media (min-width: 1201px) {
     display: inline-block;
   }
 `;
@@ -17,6 +17,9 @@ export const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  @media (min-width: 768px) {
+    width: 100vw;
+  }
 `;
 export const StyledLogo = styled.i`
   margin: 21px auto 21px 64px;
@@ -32,8 +35,12 @@ export const StyledNav = styled.nav`
   justify-content: space-between;
   gap: 26px;
   min-width: 427px;
-  margin-right: 950px;
+  margin-right: 850px;
+  margin-left: 50px;
   align-items: center;
+  @media (min-width: 768px) {
+    margin-right: auto;
+  }
 `;
 export const StyledLink = styled.span`
   font-family: 'Assistant', sans-serif;

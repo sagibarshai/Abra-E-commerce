@@ -7,17 +7,16 @@ export const StyledMain = styled.main`
   font-family: 'Assistant', sans-serif;
   color: #fff;
   line-height: normal;
-  width: 1920px;
+  width: 100vw;
   min-height: 100vh;
   @media ${mobileM} {
-    width: 100vw;
     min-height: 100vh;
   }
 `;
 
 export const StyledMainHeader = styled.h1`
   margin: 0;
-  font-size: 6.4rem;
+  font-size: 5rem;
   font-weight: bold;
   letter-spacing: 0.856rem;
   padding-top: 100px;

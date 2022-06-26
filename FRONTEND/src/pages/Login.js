@@ -106,26 +106,4 @@ export default (props) => {
       </StyledMain>
     </>
   );
-  {
-    /* // <form onSubmit={(event) => formSubmitHandler(event)}>
-    //   {renderErrorContentHandler(errorMessage)} */
-  }
-  //   <input
-  //     type="email"
-  //     value={email}
-  //     placeholder="enter your email"
-  //     onChange={(event) => {
-  //       inputHandler(event, 'email');
-  //     }}
-  //   />
-  //   <input
-  //     type="password"
-  //     value={password}
-  //     placeholder="enter your password"
-  //     onChange={(event) => {
-  //       inputHandler(event, 'password');
-  //     }}
-  //   />
-  //   <button type="submit">Login</button>
-  // </form>
 };

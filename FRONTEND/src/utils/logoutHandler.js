@@ -7,6 +7,6 @@ export const logoutHandler = (userId, setUserIsLoggedin) => {
     .put(`http://localhost:5500/api/auth/logout`, {
       userId,
     })
-    .then((res) => console.log(res))
+    .then((res) => {})
     .catch((err) => console.log(err));
 };

@@ -57,6 +57,7 @@ export const StyledItem = styled.div`
   flex-direction: column;
   align-items: center;
   font-size: 20px;
+  flex-grow: 1;
   @media ${mobileM} {
     min-width: 160px;
     min-height: 264px;

@@ -20,7 +20,6 @@ export default (props) => {
       .then((res) => {
         setItemsInCart(res.data.items);
         setTotalPrice(res.data.totalPrice);
-        console.log(res);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -64,7 +63,7 @@ export default (props) => {
         itemsInCart: updatedItemsInCart,
         cartTotalPrice: updatedTotalPrice,
       })
-      .then((res) => console.log(res))
+      .then((res) => {})
       .catch((err) => console.log(err));
   };
   return (

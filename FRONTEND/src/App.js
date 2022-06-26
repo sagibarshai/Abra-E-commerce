@@ -35,7 +35,7 @@ const App = () => {
           setUserIsLoggedin={setUserIsLoggedin}
           username={username}
         />
-        <Products.Provider>
+        <Products.Provider value>
           <Routes>
             <Route path="/" exect element={<Navigate to="/signup" />} />
             <Route

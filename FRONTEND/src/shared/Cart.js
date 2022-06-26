@@ -63,7 +63,7 @@ export default (props) => {
         updatedTotalPrice,
         itemsInCart: updatedItemsInCart,
       })
-      .then((res) => console.log(res))
+      .then((res) => {})
       .catch((err) => console.log(err));
   };
 
@@ -106,7 +106,7 @@ export default (props) => {
         totalCartPrice: updatedPrice,
         itemsInCart: updatedItemsInCart,
       })
-      .then((res) => console.log(res))
+      .then((res) =>{})
       .catch((err) => console.log(err));
   };
   return (
@@ -199,7 +199,10 @@ export default (props) => {
         {!props.userId && (
           <>
             <StyledImg src="/images/empty-cart.png" marginTop="227px" />
-            <StyledParagraphMessage>Your cart is empty</StyledParagraphMessage>
+            <StyledParagraphMessage>
+              Your cart is empty{' '}
+              {!props.userId ? ', signup and start to shop !' : ''}
+            </StyledParagraphMessage>
           </>
         )}
         <StyledPraimaryButton
