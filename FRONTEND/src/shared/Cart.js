@@ -195,13 +195,13 @@ export default (props) => {
         </>
         {props.itemsInCart && !props.itemsInCart.length && (
           <>
-            <StyledImg src="/images/empty-cart.png" marginTop="227px" />
+            <StyledImg src="/images/emptyCart.png" marginTop="227px" />
             <StyledParagraphMessage>Your cart is empty</StyledParagraphMessage>
           </>
         )}
         {!props.userId && (
           <>
-            <StyledImg src="/images/empty-cart.png" marginTop="227px" />
+            <StyledImg src="/images/emptyCart.png" marginTop="227px" />
             <StyledParagraphMessage>
               Your cart is empty{' '}
               {!props.userId ? ', signup and start to shop !' : ''}

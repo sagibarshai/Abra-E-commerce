@@ -56,9 +56,9 @@ const MobileHeader = (props) => {
       {toggleMenu && (
         <StyledMenuPopup>
           <StyledPopupHeader>
-            <img src="/images/logo-white.png" />
+            <img src="/images/logoWhite.png" />
             <StyledXButton
-              src="images/x-button.png"
+              src="images/xButton.png"
               onClick={toggleMenuHandler}
             />
           </StyledPopupHeader>
