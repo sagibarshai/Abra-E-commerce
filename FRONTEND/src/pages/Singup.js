@@ -32,7 +32,7 @@ export default () => {
       isloggedIn: false,
     };
     axios
-      .post('http://localhost:5500/api/auth/signup', userData)
+      .post(process.env.REACT_APP_BACKEND_URL + '/auth/signup', userData)
       .then((res) => {
         if (res.data.errorMessage) {
           setRenderContent(res.data.errorMessage);

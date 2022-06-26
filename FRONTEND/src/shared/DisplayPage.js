@@ -16,7 +16,7 @@ export default (props) => {
   const userId = localStorage.getItem('userId') || null;
   useEffect(() => {
     axios
-      .get(`http://localhost:5500/api/users/${userId}`)
+      .get(process.env.REACT_APP_BACKEND_URL +`/users/${userId}`)
       .then((res) => {
         setItemsInCart(res.data.items);
         setTotalPrice(res.data.totalPrice);
@@ -58,7 +58,7 @@ export default (props) => {
       setItemsInCart([updatedItemsInCart]);
     }
     axios
-      .put(`http://localhost:5500/api/users/${userId}`, {
+      .put(process.env.REACT_APP_BACKEND_URL +`/users/${userId}`, {
         userId,
         itemsInCart: updatedItemsInCart,
         cartTotalPrice: updatedTotalPrice,

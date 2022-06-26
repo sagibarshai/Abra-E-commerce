@@ -32,7 +32,7 @@ export default (props) => {
       setErrorMessgae('invalid input');
     }
     axios
-      .put('http://localhost:5500/api/auth/login', userData)
+      .put(process.env.REACT_APP_BACKEND_URL + '/auth/login', userData)
       .then((res) => {
         if (!res.data.errorMessage) {
           const userId = res.data.message._id;

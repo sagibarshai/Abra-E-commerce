@@ -19,7 +19,7 @@ const App = () => {
   const [userIsLoggedin, setUserIsLoggedin] = useState(false);
   const products = useContext(Products);
   useEffect(() => {
-    if (getAllLocalStorage().length === 2) {
+    if (getAllLocalStorage().length >= 2) {
       setUserId(localStorage.getItem('userId'));
       setUserIsLoggedin(true);
       setUsername(localStorage.getItem('username'));

@@ -4,7 +4,7 @@ export const logoutHandler = (userId, setUserIsLoggedin) => {
   localStorage.removeItem('userId');
   localStorage.removeItem('username');
   axios
-    .put(`http://localhost:5500/api/auth/logout`, {
+    .put(process.env.REACT_APP_BACKEND_URL + `/auth/logout`, {
       userId,
     })
     .then((res) => {})

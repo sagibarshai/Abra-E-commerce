@@ -22,7 +22,7 @@ import { StyledPraimaryButton } from './UIElements/StyledPraimaryButton';
 export default (props) => {
   useEffect(() => {
     axios
-      .get(`http://localhost:5500/api/users/${props.userId}`)
+      .get(process.env.REACT_APP_BACKEND_URL + `/users/${props.userId}`)
       .then((res) => {
         props.setTotalPrice(res.data.totalPrice);
         props.setItemsInCart(res.data.cartItems);
@@ -32,7 +32,7 @@ export default (props) => {
 
   const deleteItemHandler = (productObj) => {
     axios
-      .put(`http://localhost:5500/api/users/${props.userId}/delete`, {
+      .put(process.env.REACT_APP_BACKEND_URL + `/users/${props.userId}/delete`, {
         productObj,
       })
       .then((res) => {
@@ -58,11 +58,14 @@ export default (props) => {
     const updatedTotalPrice = totalPrice + productObj.price;
     props.setTotalPrice(updatedTotalPrice);
     axios
-      .put(`http://localhost:5500/api/users/${props.userId}/increse`, {
-        productObj,
-        updatedTotalPrice,
-        itemsInCart: updatedItemsInCart,
-      })
+      .put(
+        process.env.REACT_APP_BACKEND_URL + `/users/${props.userId}/increse`,
+        {
+          productObj,
+          updatedTotalPrice,
+          itemsInCart: updatedItemsInCart,
+        }
+      )
       .then((res) => {})
       .catch((err) => console.log(err));
   };
@@ -102,11 +105,11 @@ export default (props) => {
       props.setTotalPrice(updatedPrice);
     }
     axios
-      .put(`http://localhost:5500/api/users/${props.userId}/decrese`, {
+      .put(process.env.REACT_APP_BACKEND_URL +`/users/${props.userId}/decrese`, {
         totalCartPrice: updatedPrice,
         itemsInCart: updatedItemsInCart,
       })
-      .then((res) =>{})
+      .then((res) => {})
       .catch((err) => console.log(err));
   };
   return (
