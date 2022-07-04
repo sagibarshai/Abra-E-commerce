@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 export const StyledMediumMobileContainer = styled.div`
   display: none;
-  font-family: 'Assistant', sans-serif;
   @media (max-width: 1200px) {
+    font-family: 'Assistant', sans-serif;
     display: inline-block;
+    width:100vw;
   }
 `;
 export const StyledMobileHeader = styled.header`

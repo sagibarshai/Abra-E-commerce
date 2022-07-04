@@ -46,7 +46,7 @@ const DesktopHeader = (props) => {
           })}
         </StyledNav>
         {props.userIsLoggedin && (
-          <>
+          <div style={{marginRight:'30px'}}>
             <StyledUsername>Hello {props.username}</StyledUsername>
             <StyledButton>
               <StyledUserLogo src={userIcon} />
@@ -70,7 +70,7 @@ const DesktopHeader = (props) => {
                 logout
               </NavLink>
             </StyledLink>
-          </>
+          </div>
         )}
         {!props.userIsLoggedin && (
           <>

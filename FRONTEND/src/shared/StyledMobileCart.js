@@ -40,6 +40,7 @@ export const StyledImgContainer = styled.div`
   height: ${(props) => props.height};
   position: ${(props) => props.position};
   ${(props) => (props.center ? `display: inline-block ; margin:0 auto;` : '')}
+  margin-right:20px;
 `;
 export const StyledImg = styled.img`
   width: ${(props) => props.width};

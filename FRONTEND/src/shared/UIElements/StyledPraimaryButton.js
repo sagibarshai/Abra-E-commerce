@@ -7,6 +7,7 @@ export const StyledPraimaryButton = styled.button`
   width: ${(props) => props.width};
   border: ${(props) => props.border};
   margin-top: ${(props) => props.marginTop};
+  margin-bottom: ${(props) => props.marginBottom};
   cursor: pointer;
   height: 42px;
   font-family: 'Assistant', sans-serif;

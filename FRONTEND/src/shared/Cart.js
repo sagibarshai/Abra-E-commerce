@@ -218,6 +218,7 @@ export default (props) => {
           backgroundColor="#000"
           color="white"
           marginTop="24px"
+          marginBottom="48px"
           width="268px"
           disabled={
             (props.itemsInCart && !props.itemsInCart.length) || !props.userId
@@ -226,6 +227,7 @@ export default (props) => {
           CHECKOUT
         </StyledPraimaryButton>
       </StyledCartConainer>
+      
       <MobileCart
         itemsInCart={props.itemsInCart}
         totalPrice={props.totalPrice}

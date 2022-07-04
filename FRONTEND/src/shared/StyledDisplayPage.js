@@ -2,16 +2,17 @@ import styled from 'styled-components';
 import { BR } from '../data/cssBrakePoints';
 const { mobileM } = BR;
 export const StyledMainContainer = styled.main`
+position:relative;
   margin-left: 24px;
   font-family: 'Assistant', sans-serif;
   margin-bottom: 100px;
-  height: 100%;
-  width: 100%;
+  height: auto;
   display: flex;
   position: relative;
   @media ${mobileM} {
     flex-direction: column;
     margin: 0;
+    padding: 0 20px;
   }
 `;
 export const StyledTitle = styled.h1`
@@ -34,6 +35,7 @@ export const StyledTitle = styled.h1`
     display: inline-block;
     width: max-content;
     margin-top: 36px;
+  
   }
 `;
 export const StyledFlexContainer = styled.div`

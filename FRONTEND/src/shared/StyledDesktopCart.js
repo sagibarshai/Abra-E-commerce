@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import { BR } from '../data/cssBrakePoints';
 const { mobileM } = BR;
 export const StyledCartConainer = styled.aside`
-  height: 1599px;
+  height: auto;
   margin-left: 24px;
   display: flex;
   flex-direction: column;
   font-family: 'Assistant', sans-serif;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
   padding-left: 24px;
-  padding-right: 24px;
+  width:auto;
   flex-grow: 1.9;
   @media ${mobileM} {
     display: none;
@@ -33,6 +33,7 @@ export const StyledItemsContainer = styled.div`
   flex-direction: column;
   gap: 24px;
   margin-bottom: 177px;
+  margin-right:48px;
 `;
 export const StyledFlexItem = styled.div`
   width: 268px;

@@ -10,16 +10,14 @@ export const StyledBigDesktopContainer = styled.div`
   }
 `;
 export const StyledHeader = styled.header`
+  // padding-right:24px;
   background-color: #1a223e;
-  width: 1920px;
   height: 72px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  @media (min-width: 768px) {
-    width: 100vw;
-  }
+  width: 100vw;
 `;
 export const StyledLogo = styled.i`
   margin: 21px auto 21px 64px;
@@ -36,7 +34,7 @@ export const StyledNav = styled.nav`
   gap: 26px;
   min-width: 427px;
   margin-right: 850px;
-  margin-left: 50px;
+  margin-left: 70px;
   align-items: center;
   @media (min-width: 768px) {
     margin-right: auto;
