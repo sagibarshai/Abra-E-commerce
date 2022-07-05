@@ -56,7 +56,7 @@ const MobileCart = (props) => {
             </StyledText>
           </>
         )}
-        <StyledFlexRowContainer>
+        <StyledFlexRowContainer justifayContent="center">
           {props.itemsInCart &&
             props.itemsInCart.map((item, index) => {
               return (
@@ -117,10 +117,11 @@ const MobileCart = (props) => {
         </StyledFlexRowContainer>
         <StyledPraimaryButton
           backgroundColor="#808080"
-          width="339px"
+          width="100%"
           border="none"
           color="white"
           marginTop="8px"
+          hoverBackgroundColor="black"
         >
           CHECKOUT
         </StyledPraimaryButton>

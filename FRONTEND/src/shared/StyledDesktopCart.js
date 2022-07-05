@@ -11,7 +11,7 @@ export const StyledCartConainer = styled.aside`
   padding-left: 24px;
   width:auto;
   flex-grow: 1.9;
-  @media ${mobileM} {
+  @media (max-width:1000px) {
     display: none;
   }
 `;

@@ -3,7 +3,7 @@ import { BR } from '../data/cssBrakePoints';
 const { mobileM } = BR;
 export const StyledMobileCartContainer = styled.div`
   display: none;
-  @media ${mobileM} {
+  @media (max-width:1000px) {
     display: block;
     width: 100%;
     height: 393px;
