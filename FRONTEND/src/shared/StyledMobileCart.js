@@ -9,6 +9,7 @@ export const StyledMobileCartContainer = styled.div`
     height: 393px;
     text-align: center;
     font-family: 'Assistant' sans-serif;
+    
   }
 `;
 export const StyledTitle = styled.h2`

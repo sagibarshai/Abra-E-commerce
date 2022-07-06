@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/users/user');
 const cartRoutes = require('./routes/cart/cart');
+const productsRoutes = require('./routes/products/products')
 const app = express();
 app.use(
   cors({
@@ -13,11 +14,11 @@ app.use(
 );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 const port = process.env.PORT || 5500;
 
 app.use('/api/auth', userRoutes);
 app.use('/api/users', cartRoutes);
+app.use('/api',productsRoutes)
 const url = `mongodb+srv://adhtcrah:akuorc1010@cluster0.fsvsblk.mongodb.net/users?retryWrites=true&w=majority
 
 `;

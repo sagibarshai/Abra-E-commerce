@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import axios from 'axios';
 import MobileCart from './MobileCart';
 import {
@@ -41,6 +41,7 @@ export default (props) => {
       .then((res) => {
         props.setTotalPrice(res.data.totalPrice);
         props.setItemsInCart(res.data.cartItems);
+        
       })
       .catch((err) => console.log(err));
   };
@@ -237,5 +238,6 @@ export default (props) => {
         userId={props.userId}
       />
     </>
+    
   );
 };

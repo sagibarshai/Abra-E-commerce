@@ -11,6 +11,8 @@ export const StyledCartConainer = styled.aside`
   padding-left: 24px;
   width:auto;
   flex-grow: 1.9;
+  padding-right:48px;
+
   @media (max-width:1000px) {
     display: none;
   }
@@ -33,7 +35,6 @@ export const StyledItemsContainer = styled.div`
   flex-direction: column;
   gap: 24px;
   margin-bottom: 177px;
-  margin-right:48px;
 `;
 export const StyledFlexItem = styled.div`
   width: 268px;

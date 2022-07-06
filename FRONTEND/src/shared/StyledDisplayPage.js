@@ -25,6 +25,7 @@ export const StyledTitle = styled.h1`
   position: absolute;
   top: 64px;
   left: 24px;
+  ${props => props.centerd? `position:absolute ; top:10% ; left:50% ;  transform: translate(-50%, -50%);` : ''}
   @media (max-width:1000px) {
     order: 2;
     position: relative;
@@ -58,6 +59,7 @@ export const StyledItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width:${props => props.width};
   font-size: 20px;
   flex-grow: 1;
   @media (max-width:1000px) {
@@ -78,3 +80,8 @@ export const StyledImg = styled.img`
     height: 160px;
   }
 `;
+export const StyledButtonContainer = styled.div`
+display:flex;
+justify-content: space-between;
+gap:20px;
+`
