@@ -10,7 +10,7 @@ import {
   StyledTitle,
 } from "../shared/StyledDisplayPage";
 import EditProduct from "./EditProduct"
-import {Link, Navigate  } from 'react-router-dom' 
+import {Link  } from 'react-router-dom' 
 import { StyledPraimaryButton } from "../shared/UIElements/StyledPraimaryButton";
 const AllProducts = () => {
   const [productsFromDb, setProductsFromDb] = useState([]);
@@ -36,9 +36,6 @@ const AllProducts = () => {
               <StyledText>{product.name}</StyledText>
               <StyledText>{product.price} ILS</StyledText>
               <StyledButtonContainer>
-              <Link state={{name:product.name , price:product.price , imgSrc:product.imgSrc}} to={`/manager/products/${product.name}`}>
-                
-                 
                 <StyledPraimaryButton
                   hoverBackgroundColor="black"
                   hoverColor="white"
@@ -49,9 +46,10 @@ const AllProducts = () => {
                   border="2px solid lightgrey"
                   
                 >
-                  Edit Product
+                 <Link state={{name:product.name , price:product.price , imgSrc:product.imgSrc}} style={{width:"40%", textDecoration:'none' ,color:'black', }} to={`/manager/products/${product.name}`}>Edit Product</Link>
                 </StyledPraimaryButton>
-                </Link>
+                
+                
                 <StyledPraimaryButton
                   hoverBackgroundColor="black"
                   hoverColor="white"
@@ -64,16 +62,16 @@ const AllProducts = () => {
                     console.log(product);
                   }}
                 >
-                  Delete Proudct
+                  <Link state={{name:product.name , price:product.price , imgSrc:product.imgSrc}} style={{width:"40%" , textDecoration:'none' ,color:'black'}} to={`/manager/products/${product.name}`}>Delete Proudct</Link>
                 </StyledPraimaryButton>
               </StyledButtonContainer>
             </StyledItem>
           );
         })}
     
+    // <AddProduct/>
     </StyledFlexContainer>
 
-    // <AddProduct/>
   );
 };
 

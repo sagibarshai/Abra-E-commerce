@@ -30,12 +30,10 @@ const App = () => {
       setUsername(localStorage.getItem("username"));
       axios
         .get(process.env.REACT_APP_BACKEND_URL + "/products")
-        .then((data) => {console.log(data.data[0].items)
-           setAllProduts({ items: data.data[0].items })})
+        .then((data) => setAllProduts({ items: data.data[0].items }))
         .catch((err) => console.log(err));
     }
   }, []);
-  // console.log(allProducts);
 
   return (
     <>
