@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 import { BR } from '../../data/cssBrakePoints';
 const { mobileM } = BR;
-export const StyledPraimaryButton = styled.button`
+export const StyledPraimaryButton = styled.button
+`
   background-color: ${(props) => props.backgroundColor};
   color: ${(props) => props.color};
   width: ${(props) => props.width};
+  height: ${(props) => props.height || '42px'};
   border: ${(props) => props.border};
   margin-top: ${(props) => props.marginTop};
   margin-bottom: ${(props) => props.marginBottom};
+  box-shadow: ${props => props.boxShadow};
   cursor: pointer;
-  height: 42px;
   font-family: 'Assistant', sans-serif;
   font-size: 18px;
   font-weight: 500;

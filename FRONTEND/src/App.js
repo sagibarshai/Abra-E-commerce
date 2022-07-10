@@ -15,6 +15,7 @@ import AddProduct from "./Manager/AddProduct";
 import { getAllLocalStorage } from "./utils/getAllLocalStorage";
 import AllProducts from "./Manager/AllProducts";
 import EditProduct from "./Manager/EditProduct";
+import DeleteProduct from "./Manager/DeleteProduct";
 const App = () => {
   const products = useContext(Products);
   const [allProducts, setAllProduts] = useState(products);
@@ -91,8 +92,10 @@ const App = () => {
                 />
               }
             />
-            <Route path="manager/products" element={<AllProducts />} exect />
-            <Route path="/manager/products/:productName" element={<EditProduct />} exect />
+            <Route path="manager/products" element={<AllProducts username={username} />} exect />
+            <Route path="/manager/products/edit/:productName" element={<EditProduct username={username} />} exect />
+            <Route path="/manager/products/delete/:productName" element={<DeleteProduct username={username} />} exect />
+            <Route path="/manager/products/add" element={<AddProduct username={username} />} exect />
           </Routes>
         </Products.Provider>
       </BrowserRouter>

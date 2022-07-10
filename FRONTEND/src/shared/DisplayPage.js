@@ -74,7 +74,7 @@ export default (props) => {
           {props.products.map((product, index) => {
             return (
               <StyledItem key={index}>
-                <StyledImg src={product.imgSrc} />
+                <StyledImg  width="80%" height="80%" src={product.imgSrc} />
                 <StyledText color="#000" marginTop="16px">
                   {product.name}
                 </StyledText>
