@@ -72,7 +72,7 @@ const addProduct = async (req , res , next) => {
   const allProductsArray = await ProductsSchema.find()
   const exsistingProducts = allProductsArray[0]
   const exsistingItems = exsistingProducts.items
-  const newItems = [...exsistingItems , newItem]
+  const newItems = [ newItem,...exsistingItems ]
   const newProductsObj = {
     ...exsistingProducts, items:newItems
   }

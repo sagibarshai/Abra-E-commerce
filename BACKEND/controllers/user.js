@@ -19,6 +19,7 @@ const signup = async (req, res, next) => {
     email,
     password,
     isloggedIn,
+    manager:false
   });
   const userResult = await newUser.save();
   const newCart = new CartSchema({
@@ -53,14 +54,14 @@ const login = async (req, res, next) => {
   return res.json({ errorMessage: 'not found ' });
 };
 const logout = async (req, res, next) => {
-  const { userId } = req.body;
+  const { userId, email } = req.body;
   const users = await UserSchema.find();
   for (let user of users) {
-    UserSchema.updateOne({ id: userId }, { $set: { isloggedIn: false } })
-      .then((doc) => {
-        console.log(doc);
-      })
-      .catch((err) => console.log(err));
+    UserSchema.updateOne({ email: email }, { $set: { isloggedIn: false } })
+    .then((doc) => {
+      console.log(doc);
+    })
+    .catch((err) => console.log(err));
     return res.json({
       message: 'Logged out!',
     });

@@ -19,21 +19,27 @@ import { NavLink } from 'react-router-dom';
 import { logoutHandler } from '../../utils/logoutHandler';
 import { ReactComponent as Logo } from '../../svg/logo.svg';
 import userIcon from '../../svg/userIcon.png';
-import { NAV_AUTH_LINKS, NAV_LINKS } from '../../shared/links';
+import { NAV_AUTH_LINKS, NAV_LINKS,MANAGER_NAV_LINKS } from '../../shared/links';
 
 const MobileHeader = (props) => {
   let ALL_LINKS = [...NAV_LINKS, ...NAV_AUTH_LINKS];
   ALL_LINKS = ALL_LINKS.filter((link) => link.to !== '/logout');
   const [navLinks, setNavLinks] = useState(ALL_LINKS);
   const [toggleMenu, setToggleMenu] = useState(false);
+  const [links , setLinks] = useState(NAV_LINKS)
   const toggleMenuHandler = () => {
     setToggleMenu((prevState) => !prevState);
   };
   useEffect(() => {
     if (props.userIsLoggedin) {
-      setNavLinks(NAV_LINKS);
+      setLinks(NAV_LINKS);
+       if(props.isManager) {
+        let managerLinks = [...MANAGER_NAV_LINKS]
+      setLinks(managerLinks)
     }
-  }, [props.userIsLoggedin]);
+  }
+  else setLinks([...NAV_LINKS ,...NAV_AUTH_LINKS].filter(link => link.to!=='/logout'))
+  }, [props.userIsLoggedin , props.isManager]);
   return (
     <StyledMediumMobileContainer>
       <StyledMobileHeader>
@@ -58,12 +64,12 @@ const MobileHeader = (props) => {
           <StyledPopupHeader>
             <img src="/images/logoWhite.png" />
             <StyledXButton
-              src="images/XButton.png"
+              src="/images/XButton.png"
               onClick={toggleMenuHandler}
             />
           </StyledPopupHeader>
           <StyledNavContainer>
-            {navLinks.map((link, index) => {
+            {links.map((link, index) => {
               return (
                 <StyledLink key={index}>
                   <NavLink

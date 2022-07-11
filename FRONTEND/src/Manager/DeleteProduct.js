@@ -6,7 +6,6 @@ import { StyledPraimaryButton } from "../shared/UIElements/StyledPraimaryButton"
 const DeleteProduct = (props) => {
   const navigate = useNavigate();
   const location = useLocation().state;
-  console.log(location)
   const deleteProductHandler = () => {
     const itemObj = {
         name:location.name,
@@ -21,13 +20,14 @@ const DeleteProduct = (props) => {
 
   return (
     <StyledContainer>
-      <StyledText fontSize="20px" centerd color="white">
+      <StyledText fontSize="20px" color="black">
         Hey {props.username}!
       </StyledText>
       <br />
-      <StyledText fontSize="18px" centerd color="white">
+      <StyledText fontSize="18px" color="black">
         Are you sure that you want to delete this product?
       </StyledText>
+      
       <StyledItem>
         <StyledImg src={location.imgSrc} />
         <StyledText fontSize="22px">{location.name}</StyledText>
@@ -39,7 +39,7 @@ const DeleteProduct = (props) => {
           hoverColor="black"
           border="none"
           boxShadow="2px 2px 2px solid black"
-          width="50%"
+          width="90%"
           onClick={() => navigate("/manager/products")}
         >
           No
@@ -51,7 +51,7 @@ const DeleteProduct = (props) => {
           hoverColor="black"
           border="none"
           boxShadow="2px 2px 2px solid black"
-          width="50%"
+          width="90%"
           onClick={deleteProductHandler}
         >
           Yes
@@ -61,10 +61,10 @@ const DeleteProduct = (props) => {
   );
 };
 const StyledContainer = styled.div`
-  width: 50vw;
-  height: 60vh;
-  background-color: black;
-  color: white;
+margin-top:40px;
+  width: max-content;
+  min-height: 70vh;
+  color: black;
   font-family: inherit;
   position: absolute;
   top: 50%;
@@ -73,6 +73,7 @@ const StyledContainer = styled.div`
   text-align: center;
 `;
 const StyledItem = styled.div`
+margin-top:20px;
   display: flex;
   flex-direction: column;
   row-gap: 3px;
@@ -94,7 +95,6 @@ const StyledText = styled.p`
   color: ${(props) => props.color || "black"};
   font-size: ${(props) => props.fontSize};
   line-height: 0;
-  display: inline-block;
 `;
 
 export default DeleteProduct;

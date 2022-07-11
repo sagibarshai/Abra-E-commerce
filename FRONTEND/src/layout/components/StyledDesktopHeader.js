@@ -32,7 +32,7 @@ export const StyledNav = styled.nav`
   display: flex;
   justify-content: space-between;
   gap: 26px;
-  min-width: 427px;
+  /* min-width: 427px; */
   margin-right: 850px;
   margin-left: 70px;
   align-items: center;

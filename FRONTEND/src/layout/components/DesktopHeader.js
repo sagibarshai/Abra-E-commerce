@@ -1,9 +1,9 @@
-import React from 'react';
+import React,{useState , useEffect} from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { logoutHandler } from '../../utils/logoutHandler';
 import { ReactComponent as Logo } from '../../svg/logo.svg';
 import userIcon from '../../svg/userIcon.png';
-import { NAV_AUTH_LINKS, NAV_LINKS } from '../../shared/links';
+import { NAV_AUTH_LINKS, NAV_LINKS,MANAGER_NAV_LINKS } from '../../shared/links';
 import {
   StyledBigDesktopContainer,
   StyledHeader,
@@ -14,8 +14,14 @@ import {
   StyledButton,
   StyledUsername,
 } from './StyledDesktopHeader';
-
 const DesktopHeader = (props) => {
+  const [links , setLinks] = useState(NAV_LINKS)
+
+  useEffect(() => {
+    if(props.isManager) {
+      setLinks(MANAGER_NAV_LINKS)
+    }
+  } , [props.isManager])
   return (
     <StyledBigDesktopContainer>
       <StyledHeader>
@@ -25,10 +31,11 @@ const DesktopHeader = (props) => {
           </StyledLogo>
         </Link>
         <StyledNav>
-          {NAV_LINKS.map((link, index) => {
+          {links.map((link, index) => {
             return (
               <StyledLink key={index}>
                 <NavLink
+                end 
                   to={link.to}
                   style={({ isActive }) => {
                     return {
@@ -66,6 +73,7 @@ const DesktopHeader = (props) => {
                     marginRight: '20px',
                   };
                 }}
+                
               >
                 logout
               </NavLink>

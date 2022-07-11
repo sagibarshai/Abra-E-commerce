@@ -37,11 +37,16 @@ export default (props) => {
         if (!res.data.errorMessage) {
           const userId = res.data.message._id;
           const username = res.data.message.username;
+          const isManager = res.data.message.manager
           localStorage.setItem('userId', userId);
+          if(isManager) localStorage.setItem('isManager', userId);
           localStorage.setItem('username', username);
+          localStorage.setItem('email', email);
           navigate(`/best-sellers`);
           props.setUserIsLoggedin(true);
           props.setUsername(username);
+          if(isManager) return window.location.href = '/manager/products'
+
           return;
         } else {
           setErrorMessgae(res.data.errorMessage);

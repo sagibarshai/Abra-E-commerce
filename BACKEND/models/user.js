@@ -4,5 +4,6 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   isloggedIn: { type: Boolean },
+  manager:{type:Boolean}
 });
 module.exports = mongoose.model('Users', UserSchema);

@@ -20,6 +20,7 @@ const App = () => {
   const products = useContext(Products);
   const [allProducts, setAllProduts] = useState(products);
   const [userId, setUserId] = useState(localStorage.getItem("userId" || null));
+  const [isManager, setIsManager] = useState(localStorage.getItem("isManager" || false));
   const [username, setUsername] = useState(
     localStorage.getItem("userId" || null)
   );
@@ -29,13 +30,12 @@ const App = () => {
       setUserId(localStorage.getItem("userId"));
       setUserIsLoggedin(true);
       setUsername(localStorage.getItem("username"));
+    }
       axios
         .get(process.env.REACT_APP_BACKEND_URL + "/products")
         .then((data) => setAllProduts({ items: data.data[0].items }))
-        .catch((err) => console.log(err));
-    }
+        .catch((err) => {console.log(err)});
   }, []);
-
   return (
     <>
       <BrowserRouter>
@@ -45,6 +45,8 @@ const App = () => {
           setUserId={setUserId}
           setUserIsLoggedin={setUserIsLoggedin}
           username={username}
+          isManager={isManager}
+          setIsManager={setIsManager}
         />
         <Products.Provider value>
           <Routes>
@@ -89,13 +91,19 @@ const App = () => {
                   setUserIsLoggedin={setUserIsLoggedin}
                   setUserId={setUserId}
                   setUsername={setUsername}
+                  setIsManager={setIsManager}
+                  isManager={isManager}
                 />
               }
             />
-            <Route path="manager/products" element={<AllProducts username={username} />} exect />
-            <Route path="/manager/products/edit/:productName" element={<EditProduct username={username} setAllProduts={setAllProduts}/>} exect />
-            <Route path="/manager/products/delete/:productName" element={<DeleteProduct username={username} setAllProduts={setAllProduts} />} exect />
-            <Route path="/manager/products/add" element={<AddProduct username={username} />} exect setAllProduts={setAllProduts} />
+      {isManager && 
+      <>
+      <Route path="manager/products" element={<AllProducts username={username} />} exect />
+          <Route path="/manager/products/edit/:productName" element={<EditProduct username={username} setAllProduts={setAllProduts} />} exect />
+          <Route path="/manager/products/delete/:productName" element={<DeleteProduct username={username} setAllProduts={setAllProduts} />} exect />
+          <Route path="/manager/products/add" element={<AddProduct username={username} allProducts={allProducts}  setAllProduts={setAllProduts}/>} exect  />
+      </>
+          }
           </Routes>
         </Products.Provider>
       </BrowserRouter>

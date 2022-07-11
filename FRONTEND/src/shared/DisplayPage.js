@@ -22,7 +22,7 @@ export default (props) => {
         setTotalPrice(res.data.totalPrice);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [props]);
 
   const addToCarHandler = (productObj) => {
     if (!userId) return alert('Please Login');

@@ -13,7 +13,6 @@ export const StyledMainContainer = styled.main`
     flex-direction: column;
     margin: 0;
     padding: 0 20px;
-    
   }
 `;
 export const StyledTitle = styled.h1`
@@ -25,6 +24,7 @@ export const StyledTitle = styled.h1`
   position: absolute;
   top: 64px;
   left: 24px;
+  order:${props => props.order};
   ${props => props.centerd? `position:absolute ; top:10% ; left:50% ;  transform: translate(-50%, -50%);` : ''}
   @media (max-width:1000px) {
     order: 2;
@@ -37,6 +37,8 @@ export const StyledTitle = styled.h1`
     display: inline-block;
     width: max-content;
     margin-top: 36px;
+    order:${props => props.order};
+
   }
 `;
 export const StyledFlexContainer = styled.div`
@@ -47,12 +49,14 @@ export const StyledFlexContainer = styled.div`
   height: auto;
   margin-top: 156px;
   flex-grow: 8.1;
+  order:${props => props.order};
   @media (max-width:1000px) {
     order: 3;
     width: 100%;
     column-gap: 20px;
     row-gap: 18px;
     margin: 0;
+    order:${props => props.order};
   }
 `;
 export const StyledItem = styled.div`

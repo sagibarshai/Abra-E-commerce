@@ -1,4 +1,4 @@
-export const returenTypeOfItem = (products, stringType) => {
+export const returenTypeOfItem = (products = {items:[]}, stringType) => {
   const renderedItems = [];
   const items = products.items;
   items.map((item) => {

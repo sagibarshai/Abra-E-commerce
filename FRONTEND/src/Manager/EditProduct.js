@@ -25,7 +25,6 @@ const EditProduct = () => {
   const [quantity, setQuantity] = useState(location.quantity || 5);
   const [types, setTypes] = useState(location.types || []);
   const [typesData, setTypesData] = useState(TYPES_DATA);
-  console.log(location)
   const inputHandler = (e, setInputName) => {
     setInputName(e.target.value);
   };
@@ -58,7 +57,6 @@ const EditProduct = () => {
     let newStateArr = [];
     allTypesArr.map((type, index) => {
       if (types.includes(type)) {
-        console.log(typesData[index]);
         newStateArr.push({ ...typesData[index], isChecked: true });
       } else newStateArr.push({ ...typesData[index], isChecked: false });
     });
@@ -72,7 +70,6 @@ const EditProduct = () => {
         let types = [...typesData];
         const newObjIndex = typesData.findIndex((type) => type.value === value);
         let newObjState = { ...newObj, isChecked: true };
-        console.log(newObjState);
         types[newObjIndex] = newObjState;
         setTypesData(types);
       }
@@ -157,6 +154,9 @@ const EditProduct = () => {
 };
 const StyledPage = styled.div`
   background-color: white;
+  display: block;
+  margin: 50px auto;
+  min-height: 100vh;
 `;
 
 const StyledForm = styled.form`
@@ -167,7 +167,7 @@ const StyledForm = styled.form`
   row-gap: 10px;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 `;
 const StyledLeabl = styled.label``;
 

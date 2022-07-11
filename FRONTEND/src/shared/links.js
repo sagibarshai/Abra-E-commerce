@@ -37,3 +37,14 @@ export const NAV_LINKS = [
       to: '/logout',
     },
   ];
+  export const MANAGER_NAV_LINKS = [
+    {
+      text: 'All products',
+      to: '/manager/products',
+    },
+    {
+      text: 'Add Product',
+      to: '/manager/products/add',
+    },
+
+  ];
