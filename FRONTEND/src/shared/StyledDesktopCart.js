@@ -1,19 +1,18 @@
-import styled from 'styled-components';
-import { BR } from '../data/cssBrakePoints';
+import styled from "styled-components";
+import { BR } from "../data/cssBrakePoints";
 const { mobileM } = BR;
 export const StyledCartConainer = styled.aside`
   height: auto;
   margin-left: 24px;
   display: flex;
   flex-direction: column;
-  font-family: 'Assistant', sans-serif;
+  font-family: "Assistant", sans-serif;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
   padding-left: 24px;
-  width:auto;
+  width: auto;
   flex-grow: 1.9;
-  padding-right:48px;
-
-  @media (max-width:1000px) {
+  padding-right: 48px;
+  @media (max-width: 1000px) {
     display: none;
   }
 `;
