@@ -2,7 +2,10 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import axios from 'axios'
 import { StyledPraimaryButton } from "../shared/UIElements/StyledPraimaryButton";
+<<<<<<< HEAD
 import {useNavigate} from 'react-router-dom'
+=======
+>>>>>>> implement-manager-api
 const AddProduct = () => {
   const navigate = useNavigate()
   const [name,setName] = useState('')
@@ -11,6 +14,10 @@ const AddProduct = () => {
   const [quantity,setQuantity] = useState(5)
   const [types,setTypes] = useState([])
   const [errors,setErrors] = useState([]) 
+<<<<<<< HEAD
+=======
+  console.log(errors)
+>>>>>>> implement-manager-api
   const onSubmitHandler = (e) => {
     let errorsArray = []
     e.preventDefault()
@@ -33,8 +40,12 @@ const AddProduct = () => {
     if(errorsArray.length === 0) {
       const data = {name , price  , imgSrc ,quantity , types}
       axios.put(process.env.REACT_APP_BACKEND_URL + '/manager/add-product' , data)
+<<<<<<< HEAD
       .then(res => navigate('/manager/products')
       )
+=======
+      .then(res => console.log(res))
+>>>>>>> implement-manager-api
       .catch(err => console.log(err))
     }
     }
