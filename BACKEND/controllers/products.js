@@ -79,8 +79,7 @@ const addProduct = async (req , res , next) => {
   await ProductsSchema.findOneAndRemove({items:exsistingItems})
    const newProducts = new ProductsSchema(newProductsObj)
    const result = await newProducts.save()
-   console.log(result)
-  return res.json(result);
+  return res.json(newItem);
 }
 
 exports.addProduct = addProduct
