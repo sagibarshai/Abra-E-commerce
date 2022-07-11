@@ -93,9 +93,9 @@ const App = () => {
               }
             />
             <Route path="manager/products" element={<AllProducts username={username} />} exect />
-            <Route path="/manager/products/edit/:productName" element={<EditProduct username={username} />} exect />
-            <Route path="/manager/products/delete/:productName" element={<DeleteProduct username={username} />} exect />
-            <Route path="/manager/products/add" element={<AddProduct username={username} />} exect />
+            <Route path="/manager/products/edit/:productName" element={<EditProduct username={username} setAllProduts={setAllProduts}/>} exect />
+            <Route path="/manager/products/delete/:productName" element={<DeleteProduct username={username} setAllProduts={setAllProduts} />} exect />
+            <Route path="/manager/products/add" element={<AddProduct username={username} />} exect setAllProduts={setAllProduts} />
           </Routes>
         </Products.Provider>
       </BrowserRouter>

@@ -28,11 +28,11 @@ const AllProducts = (props) => {
       {productsFromDb.length > 0 &&
         productsFromDb.map((product, index) => {
           return (
-            <StyledItem width="25%" key={index}>
-              <StyledImg width="auto" height="auto" src={product.imgSrc} />
+            <StyledItem width="25%" key={index} style={{maxWidth:'450px'}}>
+              <StyledImg width="80%" height="80%" style={{maxWidth:'300px'}} src={product.imgSrc} />
               <StyledText>{product.name}</StyledText>
               <StyledText>{product.price} ILS</StyledText>
-              <Link state={{name:product.name , price:product.price , imgSrc:product.imgSrc, cartQty:product.cartQty , types:product.types}} style={{textAlign:'center', width:"100%", textDecoration:'none' ,color:'white', }} to={`/manager/products/edit/${product.name}`}>
+              <Link state={{name:product.name , price:product.price , imgSrc:product.imgSrc, quantity:product.cartQty , types:product.types}} style={{textAlign:'center', width:"100%", textDecoration:'none' ,color:'white', }} to={`/manager/products/edit/${product.name}`}>
 
                 <StyledPraimaryButton
                   hoverBackgroundColor="lightgray"
@@ -47,7 +47,7 @@ const AllProducts = (props) => {
                 </StyledPraimaryButton>
                   </Link>
                 
-                <Link state={{name:product.name , price:product.price , imgSrc:product.imgSrc , cartQty:product.cartQty , types:product.types}} style={{ textAlign:'center',width:"100%" , textDecoration:'none' ,color:'white'}} to={`/manager/products/delete/${product.name}`}>
+                <Link state={{name:product.name , price:product.price , imgSrc:product.imgSrc , quantity:product.cartQty , types:product.types}} style={{ textAlign:'center',width:"100%" , textDecoration:'none' ,color:'white'}} to={`/manager/products/delete/${product.name}`}>
                 <StyledPraimaryButton
                   hoverBackgroundColor="lightgray"
                   hoverColor="black"
