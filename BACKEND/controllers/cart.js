@@ -88,15 +88,16 @@ const decreseItemByOne = async (req, res, next) => {
 
 const deleteItemById = async (req, res, next) => {
      const { userId } = req.params;
-     const { productObj } = req.body;
+     const { updatedProductObj } = req.body;
      const carts = await CartSchema.find();
      let cartItems = [];
      for (let cart of carts) {
           if (cart.cartId === userId) {
                let totalCartPrice = cart.totalPrice;
                cartItems = [...cart.items];
+               console.log(updatedProductObj);
                const exitingItem = cartItems.find(
-                    (item) => item.name === productObj.name
+                    (item) => item.name === updatedProductObj.name
                );
                if (exitingItem) {
                     cartItems = cartItems.filter(
