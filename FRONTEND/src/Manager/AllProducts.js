@@ -27,7 +27,7 @@ const AllProducts = (props) => {
       {productsFromDb.length > 0 &&
         productsFromDb.map((product, index) => {
           return (
-            <StyledItem width="25%" key={index} style={{ maxWidth: "450px" }}>
+            <StyledItem width="25%" key={index} style={{ maxWidth: "450px"  }}>
               <StyledImg
                 width="80%"
                 height="80%"

@@ -41,7 +41,6 @@ const App = () => {
                     console.log(err);
                });
      }, []);
-     console.log(allProducts);
      return (
           <>
                <BrowserRouter>

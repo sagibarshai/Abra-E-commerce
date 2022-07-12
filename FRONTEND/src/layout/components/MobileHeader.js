@@ -73,6 +73,7 @@ const MobileHeader = (props) => {
               return (
                 <StyledLink key={index}>
                   <NavLink
+                  end
                     onClick={() => {
                       setTimeout(() => {
                         toggleMenuHandler();

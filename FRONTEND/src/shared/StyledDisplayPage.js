@@ -79,6 +79,8 @@ export const StyledText = styled.span`
   }
 `;
 export const StyledImg = styled.img`
+height:180px;
+width:180px;
   @media (max-width:1000px) {
     width: 160px;
     height: 160px;
