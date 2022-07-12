@@ -8,8 +8,8 @@ backend and frontend technologies.
 That was very interesting project for me that taught me a lot about develop END TO END applications.
 
 
-- run backend: cd frontend ~ npm start
-- run frontend: cd backend ~ npm start
+- run backend: cd backend ~ npm start
+- run frontend: cd frontend ~ npm start
 - url:https://e-commerce-914bf.web.app/
 - to login as a manager use:
 email: sagibarshai1@gmail.com
